@@ -25,7 +25,7 @@ const StyledTable = (props: any) => {
 
     let navigate = useNavigate();
 
-    const { isAdmin= false } = props
+    const { isAdmin= false, dataList } = props
 
     const TitleLabel = (props: any) => {
         return (
@@ -69,13 +69,13 @@ const StyledTable = (props: any) => {
             return _.isNumber(value) ? value : _.isEmpty(value) ? "-" : value;
         };
         return column?.format
-            ? getValue(
-                  column?.format({
-                      value,
-                      row,
-                  })
-              )
-            : getValue(value);
+            ? _.capitalize(getValue(
+                column?.format({
+                    value,
+                    row,
+                })
+            ))
+            : _.capitalize(getValue(value))
     };
       
     return (
@@ -91,7 +91,8 @@ const StyledTable = (props: any) => {
             {/* ADD FEE / ADMIN TABLE FILTERS */}
             {!isAdmin && (
                 <Box display= "flex" justifyContent= "flex-end">
-                    <Button variant="contained" sx= {{backgroundColor: "#cb7871"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/user-availablity-status")}>
+                    {/* <Button variant="contained" sx= {{backgroundColor: "#cb7871"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/user-availablity-status")}> */}
+                    <Button variant="contained" sx= {{backgroundColor: "#cb7871"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/scan-property-code")}>
                         Collect Fee
                     </Button>
                     {/* <Box>
@@ -149,61 +150,62 @@ const StyledTable = (props: any) => {
 
                         {/* TABLE BODY */}
                         <TableBody>
-                                { COLLECTION_FEES_DATA?.map(row => (
-                                    <TableRow
-                                    hover
-                                    // onClick={(event) => handleClick(event, row.name)}
-                                    role="checkbox"
-                                    tabIndex={-1}
-                                    key={row?.id}
-                                    // selected={isItemSelected}
-                                  >
-                                    { COLLECTION_FEES_DATA_HEADCELLS?.map((column, index) => {
-                                        const value = _.get(
-                                            row,
-                                            column.columnId
-                                        );
-                                        return (
-                                            <TableCell
-                                                key={
-                                                    `${column.id}` +
-                                                    index
-                                                }
-                                                align= "left"
-                                                style={{
-                                                    verticalAlign:
-                                                        "baseline",
-                                                    maxWidth:
-                                                        column?.maxWidth,
-                                                    overflowWrap:
-                                                        "break-word",
-                                                    ...(column?.fixed && {
-                                                        position:
-                                                            "sticky",
-                                                        backgroundColor:
-                                                            "white",
-                                                    }),
-                                                    right: "0.5px",
-                                                    left: "0.5px",
-                                                }}
+                            { dataList?.map(row => (
+                            // { COLLECTION_FEES_DATA?.map(row => (
+                                <TableRow
+                                hover
+                                // onClick={(event) => handleClick(event, row.name)}
+                                role="checkbox"
+                                tabIndex={-1}
+                                key={row?._id}
+                                // selected={isItemSelected}
+                                >
+                                { COLLECTION_FEES_DATA_HEADCELLS?.map((column, index) => {
+                                    const value = _.get(
+                                        row,
+                                        column.columnId
+                                    );
+                                    return (
+                                        <TableCell
+                                            key={
+                                                `${column.id}` +
+                                                index
+                                            }
+                                            align= "left"
+                                            style={{
+                                                verticalAlign:
+                                                    "baseline",
+                                                maxWidth:
+                                                    column?.maxWidth,
+                                                overflowWrap:
+                                                    "break-word",
+                                                ...(column?.fixed && {
+                                                    position:
+                                                        "sticky",
+                                                    backgroundColor:
+                                                        "white",
+                                                }),
+                                                right: "0.5px",
+                                                left: "0.5px",
+                                            }}
+                                        >
+                                            <Typography
+                                                // className={
+                                                //     classes.text
+                                                // }
+                                                sx= {{color: "#606060", fontWeight: 500}}
                                             >
-                                                <Typography
-                                                    // className={
-                                                    //     classes.text
-                                                    // }
-                                                    sx= {{color: "#606060", fontWeight: 500}}
-                                                >
-                                                    {getTableCellValue(
-                                                        column,
-                                                        value,
-                                                        row
-                                                    )}
-                                                </Typography>
-                                            </TableCell>
-                                        )
-                                    })}
-                                    </TableRow>
-                                ))}
+                                                {getTableCellValue(
+                                                    column,
+                                                    value,
+                                                    row
+                                                )}
+                                            </Typography>
+                                        </TableCell>
+                                    )
+                                })}
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

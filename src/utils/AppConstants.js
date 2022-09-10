@@ -25,36 +25,36 @@ export const AREA_LIST = Object.freeze([
 export const COLLECTION_FEES_DATA_HEADCELLS = Object.freeze([
     {
         id: 0,
-        columnId: "status",
+        columnId: "propertyStatus",
         value: "Status",
         minWidth: "120px",
         maxWidth: "120px",
         fixed: "right"
     },
-    {
-        id: 1,
-        columnId: "payment",
-        value: "Payment",
-        minWidth: "120px",
-        maxWidth: "120px",
-        fixed: "right"
-    },
+    // {
+    //     id: 1,
+    //     columnId: "payment",
+    //     value: "Payment",
+    //     minWidth: "120px",
+    //     maxWidth: "120px",
+    //     fixed: "right"
+    // },
     {
         id: 2,
-        columnId: "area",
+        columnId: "city",
         value: "Area",
         minWidth: "120px",
         maxWidth: "120px",
         fixed: "right"
     },
-    {
-        id: 3,
-        columnId: "date",
-        value: "Date",
-        minWidth: "120px",
-        maxWidth: "120px",
-        fixed: "right"
-    },
+    // {
+    //     id: 3,
+    //     columnId: "date",
+    //     value: "Date",
+    //     minWidth: "120px",
+    //     maxWidth: "120px",
+    //     fixed: "right"
+    // },
 ]);
 
 export const COLLECTION_FEES_DATA = Object.freeze([
