@@ -21,23 +21,25 @@ const CollectFees = (props: any) => {
     }
     
     return (
-        <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
-            <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
-                <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
-                    Pay: ₹ 100
-                </Typography>
-                <Box mb= {3} width= {1}>
-                    <Button variant="contained" color="success" fullWidth onClick = {() => handlePaymentButtonClick("cash")} >
-                        Cash
-                    </Button>
+        <Box pt= {4}>
+            <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
+                <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
+                    <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
+                        Pay: ₹ 100
+                    </Typography>
+                    <Box mb= {3} width= {1}>
+                        <Button variant="contained" color="success" fullWidth onClick = {() => handlePaymentButtonClick("cash")} >
+                            Cash
+                        </Button>
+                    </Box>
+                    <Box mb= {3} width= {1}>
+                        <Button variant="contained" color="info" fullWidth onClick = {() => handlePaymentButtonClick("upi")} >
+                            UPI
+                        </Button>
+                    </Box>
                 </Box>
-                <Box mb= {3} width= {1}>
-                    <Button variant="contained" color="info" fullWidth onClick = {() => handlePaymentButtonClick("upi")} >
-                        UPI
-                    </Button>
-                </Box>
-            </Box>
-        </BorderBox>
+            </BorderBox>
+        </Box>
     )
 }
 

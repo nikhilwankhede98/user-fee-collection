@@ -17,6 +17,7 @@ import UserAvailable from "./pages/UserAvailable.tsx"
 import CollectFees from "./pages/CollectFees.tsx"
 import RevisitPage from "./pages/RevisitPage.tsx"
 import ScanPropertyCode from "./pages/ScanPropertyCode.tsx"
+import UPIPaymentViaQr from "./pages/UPIPaymentViaQr.tsx"
 
 import FeeCollectionProvider from "./lib/context/FeeCollectionContext.tsx"
 import { ToastContainer, toast } from "react-toastify";
@@ -26,21 +27,25 @@ function App() {
   return (
       <div>
         <FeeCollectionProvider>
-          <MainAppbar />
-          <Box px= {{xs: "1rem", md: "2rem"}} py= {2}>
+          {/* <MainAppbar /> */}
+          {/* <Box px= {{xs: "1rem", md: "2rem"}} py= {2}> */}
             <BrowserRouter>
-              <Routes>
-                <Route path="/" element={ <Homepage /> } />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="/fee-collection" element={<FeeCollectPage />} />
-                <Route path="/scan-property-code" element={<ScanPropertyCode />} />
-                <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
-                <Route path="/user-available" element={<UserAvailable />} />
-                <Route path="/collect-fees" element={<CollectFees />} />
-                <Route path="/revisit" element={<RevisitPage />} />
-              </Routes>
+              <MainAppbar />
+              <Box px= {{xs: "1rem", md: "2rem"}} py= {2}>
+                <Routes>
+                  <Route path="/" element={ <Homepage /> } />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/fee-collection" element={<FeeCollectPage />} />
+                  <Route path="/scan-property-code" element={<ScanPropertyCode />} />
+                  <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
+                  <Route path="/user-available" element={<UserAvailable />} />
+                  <Route path="/collect-fees" element={<CollectFees />} />
+                  <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
+                  <Route path="/revisit" element={<RevisitPage />} />
+                </Routes>
+              </Box>
             </BrowserRouter>
-          </Box>
+          {/* </Box> */}
           <ToastContainer />
         </FeeCollectionProvider>
       </div>
