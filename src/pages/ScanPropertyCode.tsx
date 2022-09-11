@@ -8,7 +8,7 @@ const ScanPropertyCode = (props: any) => {
 
     let navigate = useNavigate();
 
-    const [delay, setDelay] = useState<any>(5000)
+    const [delay, setDelay] = useState<any>(500)
     const [result, setResult] = useState<any>('No result')
 
     const handleScan = (data: any) => {
@@ -29,9 +29,12 @@ const ScanPropertyCode = (props: any) => {
       }
 
     return (
-        <Box width= {1} pt= {4}>
+        <Box width= {1} pt= {6}>
             <BorderBox >
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
+                    <Typography color= "#27878e" align= "center" sx= {{fontWeight: 600, fontSize: "20px", fontFamily: "Montserrat", mb: 4}}>
+                        Scan QR to verify property info
+                    </Typography>
                     <QrReader
                         delay={delay}
                         style={previewStyle}

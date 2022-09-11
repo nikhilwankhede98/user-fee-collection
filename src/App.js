@@ -4,7 +4,8 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Link
+  Link,
+  useLocation
 } from "react-router-dom";
 import { Box } from "@mui/material";
 
@@ -23,27 +24,32 @@ import FeeCollectionProvider from "./lib/context/FeeCollectionContext.tsx"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 function App() {
+
+  // const location = useLocation()
+  // const isHomePage  = location?.pathname === "/"
+  // console.log("location", location, isHomePage)
+
   return (
       <div>
         <FeeCollectionProvider>
           {/* <MainAppbar /> */}
-          {/* <Box px= {{xs: "1rem", md: "2rem"}} py= {2}> */}
             <BrowserRouter>
               <MainAppbar />
-              <Box px= {{xs: "1rem", md: "2rem"}} py= {2}>
-                <Routes>
-                  <Route path="/" element={ <Homepage /> } />
-                  <Route path="/admin" element={<AdminPage />} />
-                  <Route path="/fee-collection" element={<FeeCollectPage />} />
-                  <Route path="/scan-property-code" element={<ScanPropertyCode />} />
-                  <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
-                  <Route path="/user-available" element={<UserAvailable />} />
-                  <Route path="/collect-fees" element={<CollectFees />} />
-                  <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
-                  <Route path="/revisit" element={<RevisitPage />} />
-                </Routes>
-              </Box>
+                <Box px= {{xs: "1rem", md: "2rem"}} >
+                  <Routes>
+                    <Route path="/" element={ <Homepage /> } />
+                    <Route path="/admin" element={<AdminPage />} />
+                    <Route path="/fee-collection" element={<FeeCollectPage />} />
+                    <Route path="/scan-property-code" element={<ScanPropertyCode />} />
+                    <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
+                    <Route path="/user-available" element={<UserAvailable />} />
+                    <Route path="/collect-fees" element={<CollectFees />} />
+                    <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
+                    <Route path="/revisit" element={<RevisitPage />} />
+                  </Routes>
+                </Box>
             </BrowserRouter>
           {/* </Box> */}
           <ToastContainer />

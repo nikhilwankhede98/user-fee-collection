@@ -51,7 +51,7 @@ const UserAvailabilityStatus = (props: any) => {
     }
 
     return (
-        <Box pt= {4}>
+        <Box pt= {6}>
             <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
                 {/* <Box width= {1} >
                 <Box width= {1} py= {2}  display= "flex" flexDirection= "column" justifyContent= "center" alignItems= "center" minHeight= "400px" border= "1px solid green"> */}

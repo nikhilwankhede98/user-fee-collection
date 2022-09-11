@@ -35,7 +35,7 @@ const UserAvailable = (props: any) => {
     }
 
     return (
-        <Box pt= {4}>
+        <Box pt= {6}>
             <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
                 {/* <Typography color= "#27878e" sx= {{fontWeight: 600, fontSize: "20px", fontFamily: "Montserrat", mb: 6}}>
                     {`User Property Code : ${userPropertyCode}`} 

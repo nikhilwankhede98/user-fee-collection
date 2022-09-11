@@ -7,7 +7,7 @@ const UPIPaymentViaQr = (props: any) => {
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
-    const [text, setText] = useState<any>("sample text for generating QR")
+    const [text, setText] = useState<any>("sample text for generating QR asdasdasdsd")
     const [imgUrl, setImgUrl] = useState<any>("")
 
     const generateQRCode = async () => {
@@ -25,7 +25,7 @@ const UPIPaymentViaQr = (props: any) => {
     }, [])
 
     return (
-        <Box pt= {4}>
+        <Box pt= {6}>
             <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">

@@ -21,7 +21,7 @@ const CollectFees = (props: any) => {
     }
     
     return (
-        <Box pt= {4}>
+        <Box pt= {6}>
             <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">

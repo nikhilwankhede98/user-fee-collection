@@ -6,7 +6,9 @@ import {
     Typography,
 } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import logo from "../assets/images/logo.jpg"
+
 
 export const APPBAR_HEIGHT = {
     xs: 56,
@@ -24,7 +26,7 @@ const StyledMainAppbar = styled(AppBar)(({ theme }) => ({
 }));
 
 const MainAppbar = (props) => {
-    
+
     return (
         <StyledMainAppbar
             elevation={0}
@@ -34,11 +36,12 @@ const MainAppbar = (props) => {
             }}
         >
             <Box
-                // maxWidth="xl"
                 maxWidth="xl"
                 sx={{
-                    pt: "1.125rem ",
-                    pb: "1.125rem",
+                    py: {
+                        xs: "10px",
+                        md: "1.125rem",  
+                    },
                     px: {
                         xs: "1rem",
                         md: "2rem",
@@ -49,16 +52,28 @@ const MainAppbar = (props) => {
                 justifyContent={"space-between"}
                 position="relative"
             >
-                <a href= "/" style= {{textDecoration: "none", color: "white" }}>
-                    <Typography variant= "h5" sx= {{
-                            "&:hover": {
-                                cursor: "pointer",
-                            },
-                        }}
-                    >
-                        Recity
-                    </Typography>
-                </a>
+                <Box display= "flex" alignItems= "center" width= {1}>
+                    <a href= "/" style= {{textDecoration: "none", color: "white" }}>
+                        <Box display= "flex" alignItems= "center" width= {1}>
+                            <img src= {logo} alt= "logo" style= {{height: "22px", width: "22px"}} />
+                            <Typography variant= "h5" sx= {{
+                                    "&:hover": {
+                                        cursor: "pointer",
+                                    },
+                                    marginLeft: "8px"
+                                }}
+                            >
+                                Recity
+                            </Typography>
+                        </Box>
+                    </a>
+                    <Link to="/fee-collection" style={{ textDecoration: 'none', marginLeft: "60px" }}>
+                        <Typography variant= "h6" color= "#FFFFFF99" sx= {{fontWeight: 600}}>
+                            Collect Fee
+                        </Typography>
+                    </Link>
+                    
+                </Box>
                 <AccountCircleIcon fontSize="large" sx= {{
                     "&:hover": {
                         cursor: "pointer",
