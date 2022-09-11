@@ -14,6 +14,9 @@ const CollectFees = (props: any) => {
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
+    const [feeCollectionId, setFeeCollectionId] = useState<any>("")
+    const [upiQRCodeUrl, setUpiQRCodeUrl] = useState<any>("")
+
     const [enteredAmount, setEnteredAmount] = useState<any>("")
     const [helperText, setHelperText] = useState<any>("")
 
@@ -42,12 +45,16 @@ const CollectFees = (props: any) => {
             amount: parseFloat(enteredAmount).toFixed(2).toString(),
             type:paymentOption
             })
-            console.log("333", response)
+            console.log("hnh", response, response?.data?.feeCollection?._id)
             if(response?.data){
                 // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
                 if(paymentOption === "UPI") {
+                    console.log("hnh", response?.data?.feeCollection?._id)
+                    setFeeCollectionId(response?.data?.feeCollection?._id)
+                    // setUpiQRCodeUrl(response?.data?.payment?.data?.url)
                     updateUserInfo({upiQRCodeUrl: response?.data?.payment?.data?.url})
-                    updateUserInfo({feeCollectionId: response?.data?.feeCollection?._id})
+                    // updateUserInfo({feeCollectionId: response?.data?.feeCollection?._id})
+                    // updateUserInfo({upiQRCodeUrl: response?.data?.payment?.data?.url})
                 }
                 else {
                     // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
@@ -63,17 +70,38 @@ const CollectFees = (props: any) => {
     }
 
     useEffect(() => {
-        if(userInfo?.upiQRCodeUrl) {
+        if(upiQRCodeUrl) {
+            console.log('upiQRCodeUrl', upiQRCodeUrl)
+            updateUserInfo({upiQRCodeUrl: upiQRCodeUrl})
+        }
+    }, [upiQRCodeUrl])
+
+    useEffect(() => {
+        if(feeCollectionId) {
+            console.log("hnh", feeCollectionId, userInfo?.feeCollectionId)
+            updateUserInfo({feeCollectionId: feeCollectionId})
+        }
+    }, [feeCollectionId])
+
+    useEffect(() => {
+        console.log("hnh", userInfo?.upiQRCodeUrl, parseFloat(enteredAmount).toFixed(2).toString())
+        if(enteredAmount) {
             updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
         }
+    }, [userInfo?.upiQRCodeUrl, userInfo?.feeCollectionId])
+
+    useEffect(() => {
+        console.log("hnh", userInfo?.upiQRCodeUrl)
     }, [userInfo?.upiQRCodeUrl])
 
     useEffect(() => {
-        console.log("userInfo?.feeCollectionId", userInfo?.amount)
-        if(userInfo?.amount) {
+        console.log("hnh", userInfo?.feeCollectionId, userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl, userInfo?.amount!== "", userInfo?.feeCollectionId!== "")
+        if(userInfo?.amount!== "" && userInfo?.feeCollectionId!== "" && userInfo?.upiQRCodeUrl!== "") {
+            alert("dfsdsf")
+            console.log("hnh", userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl)
             navigate("/upi-payment")
         }
-    }, [userInfo?.amount])
+    }, [userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl])
 
     // const handlePaymentButtonClick = (paymentOption: any) => {
     //     switch (paymentOption) {

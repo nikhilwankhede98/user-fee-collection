@@ -14,7 +14,7 @@ const UPIPaymentViaQr = (props: any) => {
     const { userInfo, updateUserInfo, upiQRCodeUrl }: any = useContext(FeeCollectionContext)
 
     useEffect(() => {
-        console.log("upiQRCodeUrl", userInfo?.upiQRCodeUrl, userInfo, !userInfo?.amount, userInfo?.feeCollectionId)
+        console.log("hnh", userInfo?.upiQRCodeUrl, userInfo, userInfo?.amount, userInfo?.feeCollectionId)
         console.log('userInfo?.feeCollectionId', userInfo?.feeCollectionId)
         if(!userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount) {
             navigate("/fee-collection")

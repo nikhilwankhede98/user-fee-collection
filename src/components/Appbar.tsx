@@ -72,6 +72,11 @@ const MainAppbar = (props) => {
                             Collect Fee
                         </Typography>
                     </Link>
+                    <Link to="/admin" style={{ textDecoration: 'none', marginLeft: "30px" }}>
+                        <Typography variant= "h6" color= "#FFFFFF99" sx= {{fontWeight: 600}}>
+                            Admin
+                        </Typography>
+                    </Link>
                     
                 </Box>
                 <AccountCircleIcon fontSize="large" sx= {{
