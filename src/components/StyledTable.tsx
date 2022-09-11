@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import _ from "lodash"
 import {
     Paper,
@@ -26,6 +26,54 @@ const StyledTable = (props: any) => {
     let navigate = useNavigate();
 
     const { isAdmin= false, dataList } = props
+
+    const [updatedArray, setUpdatedArray] = useState<any>([])
+    // useEffect(() => {
+    //     dataList?.map(datObj => {
+    //         const newCollection = {}
+    //         newCollection.ddn = datObj.ddn
+    //         newCollection.area = datObj.area
+    //         newCollection.propertyStatus = datObj.propertyStatus
+    //         newCollection.collectionStatus = datObj.collectionStatus
+    //         newCollection.name = datObj && datObj.survey && colleciton.survey.contactOwnerName || ""
+    //         newCollection.contactNumber = datObj && datObj.survey && coll
+    //     })
+    // }, [dataList])
+
+    const feeCollections = [] // from api
+    const tableFeeCollections: any = [];
+
+    dataList?.forEach((collection, index) => {
+        const newCollection: any = {}
+        newCollection.srNo = index + 1
+        newCollection.name = collection && collection.survey && collection.survey.propertyOwnerName || "-"
+        newCollection.contactNumber = collection && collection.survey && collection.survey.contactNumber || ""
+        newCollection.ddn = collection.ddn || "-"
+        newCollection.area = collection?.area ? _.startCase(_.camelCase(collection?.area.slice(2).replace(/_/, " "))) : "-"
+        newCollection.propertyStatus = _.capitalize(collection.propertyStatus) || "-"
+        newCollection.collectionStatus =  collection.collectionStatus ? _.startCase(_.camelCase(collection.collectionStatus)) : "-"
+        newCollection.paymentType = collection && collection.payment && _.capitalize(collection.payment.type) || ""
+        newCollection.amount = collection && collection.payment && parseFloat(collection.payment.amount).toFixed(2) || ""
+        tableFeeCollections?.push(newCollection)
+    });
+
+    const headCells: any = [
+        {id: 0, columnName: "Sr. No"},
+        {id: 1, columnName: "Name"},
+        {id: 2, columnName: "Contact Number"},
+        {id: 3, columnName: "DDN"},
+        {id: 4, columnName: "Area"},
+        {id: 5, columnName: "Property Status"},
+        {id: 6, columnName: "Collection Status"},
+        {id: 8, columnName: "Payment Type"},
+        {id: 9, columnName: "Amount"},
+    ]
+
+    console.log("tableFeeCollections", tableFeeCollections)
+
+    useEffect(() => {
+        setUpdatedArray(tableFeeCollections)
+    }, [tableFeeCollections])
 
     const TitleLabel = (props: any) => {
         return (
@@ -120,7 +168,8 @@ const StyledTable = (props: any) => {
                         {/* TABLE HEAD */}
                         <TableHead>
                             <TableRow sx= {{backgroundColor: "#27878e", color: "white"}}>
-                                {COLLECTION_FEES_DATA_HEADCELLS?.map(headCell => (
+                                {/* {COLLECTION_FEES_DATA_HEADCELLS?.map(headCell => ( */}
+                                {headCells.map(headCell => (
                                     <TableCell
                                         // className = { classes.tableCellHead}
                                         key={headCell?.id}
@@ -141,7 +190,8 @@ const StyledTable = (props: any) => {
                                     >
                                         <Typography sx= {{color: "#fff", fontWeight: 500}}
                                         >
-                                            {headCell.value}
+                                            {/* {headCell.value} */}
+                                            {headCell.columnName}
                                         </Typography>
                                     </TableCell>
                                 ))}
@@ -150,60 +200,49 @@ const StyledTable = (props: any) => {
 
                         {/* TABLE BODY */}
                         <TableBody>
-                            { dataList?.map(row => (
+                            {/* { dataList?.map(row => ( */}
+                            { tableFeeCollections?.map((row, index) => (
                             // { COLLECTION_FEES_DATA?.map(row => (
                                 <TableRow
                                 hover
                                 // onClick={(event) => handleClick(event, row.name)}
                                 role="checkbox"
                                 tabIndex={-1}
-                                key={row?._id}
+                                key={row?.index}
                                 // selected={isItemSelected}
                                 >
-                                { COLLECTION_FEES_DATA_HEADCELLS?.map((column, index) => {
+                                {/* { COLLECTION_FEES_DATA_HEADCELLS?.map((column, index) => {
                                     const value = _.get(
                                         row,
                                         column.columnId
-                                    );
-                                    return (
+                                    ); */}
+                                    {/* return ( */}
+                                    {Object.values(row)?.map((objectItem:any) => (
                                         <TableCell
-                                            key={
-                                                `${column.id}` +
-                                                index
-                                            }
                                             align= "left"
                                             style={{
                                                 verticalAlign:
                                                     "baseline",
-                                                maxWidth:
-                                                    column?.maxWidth,
+                                                maxWidth: "500px",
                                                 overflowWrap:
                                                     "break-word",
-                                                ...(column?.fixed && {
-                                                    position:
-                                                        "sticky",
-                                                    backgroundColor:
-                                                        "white",
-                                                }),
                                                 right: "0.5px",
                                                 left: "0.5px",
                                             }}
                                         >
-                                            <Typography
-                                                // className={
-                                                //     classes.text
-                                                // }
-                                                sx= {{color: "#606060", fontWeight: 500}}
-                                            >
-                                                {getTableCellValue(
-                                                    column,
-                                                    value,
-                                                    row
-                                                )}
-                                            </Typography>
+                                                <Typography
+                                                    // className={
+                                                    //     classes.text
+                                                    // }
+                                                    sx= {{color: "#606060", fontWeight: 500}}
+                                                >
+                                                    {objectItem || "-"}
+                                                </Typography>
                                         </TableCell>
-                                    )
-                                })}
+                                    ))}
+
+                                    {/* ) */}
+                                {/* })} */}
                                 </TableRow>
                             ))}
                         </TableBody>

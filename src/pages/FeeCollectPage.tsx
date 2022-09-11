@@ -27,9 +27,6 @@ const FeeCollectPage = (props: any) => {
     }
 
     useEffect(() => {
-        // fetch('https://universal-code.recity.in/v1/fee-collections/areas')
-        //     .then(response => response.json())
-        //     .then(data => console.log('data', data));
         getCollection()
     }, [])
 
