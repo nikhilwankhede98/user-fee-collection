@@ -10,7 +10,7 @@ const CollectFees = (props: any) => {
 
     let navigate = useNavigate();
     
-    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+    const { userInfo, updateUserInfo, area }: any = useContext(FeeCollectionContext)
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
@@ -26,24 +26,54 @@ const CollectFees = (props: any) => {
     }, [])
 
     const handlePayment = async (paymentOption: any, redirectionRoute: any) => {
-        const response = await feeCollectionInfo({
+        if(!enteredAmount || enteredAmount === "") {
+            setHelperText("Please enter an amount") 
+        }
+        else {
+            const response = await feeCollectionInfo({
             ddn: userInfo?.propertyCode,
             propertyStatus: "OPEN",
             collectionStatus: "CURRENT",
             createdPlatform: "User-Services-Web",
             survey: userInfo?.surveyKey,
             // survey: "5f03f560f302935a63901f63",
-            amount:"30.00",
+            // amount:"30.00",
+            area: userInfo?.area,
+            amount: parseFloat(enteredAmount).toFixed(2).toString(),
             type:paymentOption
-        })
-        console.log("333", response)
-        if(response?.data){
-            navigate(redirectionRoute)
-        }
-        else {
-            toast.error("Unable to fetch data ~")
+            })
+            console.log("333", response)
+            if(response?.data){
+                // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
+                if(paymentOption === "UPI") {
+                    updateUserInfo({upiQRCodeUrl: response?.data?.payment?.data?.url})
+                    updateUserInfo({feeCollectionId: response?.data?.feeCollection?._id})
+                }
+                else {
+                    // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
+                    navigate(redirectionRoute)
+                }
+                // navigate(redirectionRoute)
+
+            }
+            else {
+                toast.error("Unable to fetch data ~")
+            }
         }
     }
+
+    useEffect(() => {
+        if(userInfo?.upiQRCodeUrl) {
+            updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
+        }
+    }, [userInfo?.upiQRCodeUrl])
+
+    useEffect(() => {
+        console.log("userInfo?.feeCollectionId", userInfo?.amount)
+        if(userInfo?.amount) {
+            navigate("/upi-payment")
+        }
+    }, [userInfo?.amount])
 
     // const handlePaymentButtonClick = (paymentOption: any) => {
     //     switch (paymentOption) {
@@ -72,9 +102,9 @@ const CollectFees = (props: any) => {
             {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
             <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
-                    <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
+                    {/* <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                         Pay: ₹ 100
-                    </Typography>
+                    </Typography> */}
                     <Box mb= {3} width= {1}>
                         <TextField 
                             InputLabelProps={{

@@ -30,7 +30,7 @@ const UserAvailabilityStatus = (props: any) => {
             navigate("/fee-collection")
         }
         // navigate("/fee-collection")
-    }, [])
+    }, [userInfo?.propertyCode, userInfo?.surveyKey])
 
     const handleOptionChange = (e: any) => {
         let { name, value }: any = e.target;

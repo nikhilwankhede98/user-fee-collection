@@ -11,10 +11,14 @@ const ScanPropertyCode = (props: any) => {
 
     let navigate = useNavigate();
 
-    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+    const { userInfo, updateUserInfo, isLoading, handleLoader }: any = useContext(FeeCollectionContext)
 
     const [delay, setDelay] = useState<any>(500)
     const [result, setResult] = useState<any>('')
+
+    useEffect(() => {
+        console.log("test", userInfo?.surveyKey, userInfo?.propertyCode, result)
+    }, [])
 
     const handleScan = async (data: any) => {
         console.log("scanned", data)
@@ -22,10 +26,10 @@ const ScanPropertyCode = (props: any) => {
             setResult(data?.text)
             if(data?.text) {
                 const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
+                // const propertyDetailResponse = await getPropertyDetails(data?.textdata?.text)
                 if(propertyDetailResponse?.success) {
                     await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id})
                 }
-                console.log("propertyDetailResponse", propertyDetailResponse)
             }
         }
     }

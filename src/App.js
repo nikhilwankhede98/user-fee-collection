@@ -20,9 +20,12 @@ import RevisitPage from "./pages/RevisitPage.tsx"
 import ScanPropertyCode from "./pages/ScanPropertyCode.tsx"
 import UPIPaymentViaQr from "./pages/UPIPaymentViaQr.tsx"
 
+import AppLoader from "./components/AppLoader.tsx"
+
 import FeeCollectionProvider from "./lib/context/FeeCollectionContext.tsx"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MainComponent from "./components/MainComponent.tsx"
 
 
 function App() {
@@ -38,17 +41,34 @@ function App() {
             <BrowserRouter>
               <MainAppbar />
                 <Box px= {{xs: "1rem", md: "2rem"}} >
-                  <Routes>
-                    <Route path="/" element={ <Homepage /> } />
-                    <Route path="/admin" element={<AdminPage />} />
-                    <Route path="/fee-collection" element={<FeeCollectPage />} />
-                    <Route path="/scan-property-code" element={<ScanPropertyCode />} />
-                    <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
-                    <Route path="/user-available" element={<UserAvailable />} />
-                    <Route path="/collect-fees" element={<CollectFees />} />
-                    <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
-                    <Route path="/revisit" element={<RevisitPage />} />
-                  </Routes>
+                    <Routes>
+                      <Route path="/" element={ <Homepage /> } />
+                      <Route path="/admin" element={<AdminPage />} />
+                      <Route path="/fee-collection" element={<FeeCollectPage />} />
+                      <Route path="/scan-property-code" element={<ScanPropertyCode />} />
+                      <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
+                      <Route path="/user-available" element={<UserAvailable />} />
+                      <Route path="/collect-fees" element={<CollectFees />} />
+                      <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
+                      <Route path="/revisit" element={<RevisitPage />} />
+                    </Routes>
+                  {/* <MainComponent /> */}
+                  {/* {false ? (
+                    <AppLoader />
+                  ) : (
+                    <Routes>
+                      <Route path="/" element={ <Homepage /> } />
+                      <Route path="/admin" element={<AdminPage />} />
+                      <Route path="/fee-collection" element={<FeeCollectPage />} />
+                      <Route path="/scan-property-code" element={<ScanPropertyCode />} />
+                      <Route path="/user-availablity-status" element={<UserAvailabilityStatus />} />
+                      <Route path="/user-available" element={<UserAvailable />} />
+                      <Route path="/collect-fees" element={<CollectFees />} />
+                      <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
+                      <Route path="/revisit" element={<RevisitPage />} />
+                    </Routes>
+                  )} */}
+                  
                 </Box>
             </BrowserRouter>
           {/* </Box> */}

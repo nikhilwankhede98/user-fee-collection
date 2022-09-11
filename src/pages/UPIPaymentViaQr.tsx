@@ -11,11 +11,12 @@ const UPIPaymentViaQr = (props: any) => {
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
-    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+    const { userInfo, updateUserInfo, upiQRCodeUrl }: any = useContext(FeeCollectionContext)
 
     useEffect(() => {
-        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
-        if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
+        console.log("upiQRCodeUrl", userInfo?.upiQRCodeUrl, userInfo, !userInfo?.amount, userInfo?.feeCollectionId)
+        console.log('userInfo?.feeCollectionId', userInfo?.feeCollectionId)
+        if(!userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount) {
             navigate("/fee-collection")
         }
         // navigate("/fee-collection")
@@ -26,7 +27,8 @@ const UPIPaymentViaQr = (props: any) => {
 
     const generateQRCode = async () => {
         try {
-            const response = await QRCode.toDataURL(text)
+            // const response = await QRCode.toDataURL(text)
+            const response = await QRCode.toDataURL(userInfo?.upiQRCodeUrl)
             setImgUrl(response)
             console.log("imgUrl", response)
         } catch (err) {
@@ -38,19 +40,26 @@ const UPIPaymentViaQr = (props: any) => {
         generateQRCode()
     }, [])
 
+    console.log("nnn", userInfo)
+
     return (
         <Box pt= {6}>
             {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
             <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
-                        Pay: ₹ 100
+                        {`Pay: ₹ ${userInfo?.amount}`}
                     </Typography>
                     {imgUrl ? (
-                        <Box width= {1} display= "flex" justifyContent= "center">
-                            <a href= {imgUrl} download >
-                                <img src= {imgUrl} alt= "qr-code" />
-                            </a>
+                        <Box width= {1}>
+                            <Box width= {1} display= "flex" justifyContent= "center" mb= {2}>
+                                <a href= {imgUrl} download >
+                                    <img src= {imgUrl} alt= "qr-code" />
+                                </a>
+                            </Box>
+                            <Button variant="contained" color="info" fullWidth  >
+                                Confirm Payment
+                            </Button>
                         </Box>
                     ) : null}
                 </Box>
