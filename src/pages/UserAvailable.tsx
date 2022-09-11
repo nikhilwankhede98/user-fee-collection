@@ -1,14 +1,17 @@
-import React, {useState} from "react"
+import React, {useState, useContext} from "react"
 import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import SelectInput from "../components/SelectInput.tsx"
 import { AREA_LIST } from "../utils/AppConstants"
 import { useNavigate } from "react-router-dom";
 import BorderBox from "../components/BorderBox.tsx"
+import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 
 const UserAvailable = (props: any) => {
 
     let navigate = useNavigate();
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
+
+    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
 
     const paymentInfo = (option: any, redirectionRoute: any) => {
         
@@ -36,7 +39,8 @@ const UserAvailable = (props: any) => {
 
     return (
         <Box pt= {6}>
-            <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
+            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
                 {/* <Typography color= "#27878e" sx= {{fontWeight: 600, fontSize: "20px", fontFamily: "Montserrat", mb: 6}}>
                     {`User Property Code : ${userPropertyCode}`} 
                 </Typography> */}

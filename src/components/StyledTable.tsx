@@ -92,7 +92,7 @@ const StyledTable = (props: any) => {
             {!isAdmin && (
                 <Box display= "flex" justifyContent= "flex-end">
                     {/* <Button variant="contained" sx= {{backgroundColor: "#cb7871"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/user-availablity-status")}> */}
-                    <Button variant="contained" sx= {{backgroundColor: "#cb7871"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/scan-property-code")}>
+                    <Button variant="contained" sx= {{backgroundColor: "#df736a"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/scan-property-code")}>
                         Collect Fee
                     </Button>
                     {/* <Box>

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useContext} from "react"
 import { Box, Button, TextField,} from "@mui/material";
 import BorderBox from "../components/BorderBox.tsx"
 import StyledDatePicker from "../components/StyledDatePicker.tsx"
@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 // import {DateTimePicker, LocalizationProvider} from "@mui/lab"
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DateTimePicker from 'react-datetime-picker';
+import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 
 const RevisitPage = (props: any) => {
 
     const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(null)
+
+    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
 
     let navigate = useNavigate();
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
@@ -29,14 +32,15 @@ const RevisitPage = (props: any) => {
     console.log('selectedDateTime', selectedDateTime)
 
     return (
-        <Box pt= {4}>
-            <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
+        <Box pt= {6}>
+            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Box mb= {3} width= {1}>
                         <TextField
                             id="outlined-name"
                             label="Selected Area"
-                            value={"Mumbai"}
+                            value={userInfo?.area}
                             disabled
                             fullWidth
                             size="small"

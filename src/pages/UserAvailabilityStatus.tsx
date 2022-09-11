@@ -1,11 +1,17 @@
-import React, {useState} from "react"
+import React, {useState, useContext, useEffect} from "react"
 import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import SelectInput from "../components/SelectInput.tsx"
 import BorderBox from "../components/BorderBox.tsx"
 import { AREA_LIST } from "../utils/AppConstants"
 import { useNavigate } from "react-router-dom";
+import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
+
 
 const UserAvailabilityStatus = (props: any) => {
+
+    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+
+    console.log("userInfo", userInfo)
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
@@ -14,6 +20,12 @@ const UserAvailabilityStatus = (props: any) => {
     const [selectedArea, setSelectedArea] = useState<any>("")
     const [areaHelperText, setAreaHelperText] = useState<any>("")
 
+    useEffect(() => {
+        if(!userInfo?.propertyCode) {
+            navigate("/fee-collection")
+        }
+    }, [userInfo])
+
     const handleOptionChange = (e: any) => {
         let { name, value }: any = e.target;
         setSelectedArea(value)
@@ -21,6 +33,7 @@ const UserAvailabilityStatus = (props: any) => {
             setAreaHelperText("Please choose your area")
         }
         else {
+            updateUserInfo({area: value})
             setAreaHelperText("")   
         }
     }
@@ -52,7 +65,8 @@ const UserAvailabilityStatus = (props: any) => {
 
     return (
         <Box pt= {6}>
-            <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
+            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
                 {/* <Box width= {1} >
                 <Box width= {1} py= {2}  display= "flex" flexDirection= "column" justifyContent= "center" alignItems= "center" minHeight= "400px" border= "1px solid green"> */}
                     <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">

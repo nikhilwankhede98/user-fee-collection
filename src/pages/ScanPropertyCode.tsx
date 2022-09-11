@@ -1,12 +1,15 @@
-import React, {useState} from "react"
+import React, {useState, useContext} from "react"
 import { Typography, Box } from "@mui/material";
 import QrReader from 'react-qr-scanner'
 import BorderBox from "../components/BorderBox.tsx"
 import { useNavigate } from "react-router-dom";
+import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 
 const ScanPropertyCode = (props: any) => {
 
     let navigate = useNavigate();
+
+    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
 
     const [delay, setDelay] = useState<any>(500)
     const [result, setResult] = useState<any>('No result')
@@ -15,6 +18,9 @@ const ScanPropertyCode = (props: any) => {
         setResult(data)
         console.log("scanned", data)
         if(data) {
+            if(data?.text) {
+                updateUserInfo({propertyCode: data?.text})
+            }
             navigate("/user-availablity-status")
         }
     }
@@ -36,7 +42,7 @@ const ScanPropertyCode = (props: any) => {
                         Scan QR to verify property info
                     </Typography>
                     <QrReader
-                        delay={delay}
+                        delay={2000}
                         style={previewStyle}
                         onError={handleError}
                         onScan={handleScan}

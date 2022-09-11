@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext} from "react"
 import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import BorderBox from "../components/BorderBox.tsx"
 import QRCode from 'qrcode'
+import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 
 const UPIPaymentViaQr = (props: any) => {
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
-    const [text, setText] = useState<any>("sample text for generating QR asdasdasdsd")
+    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+
+    const [text, setText] = useState<any>("NW-PPPP-PT-10054")
     const [imgUrl, setImgUrl] = useState<any>("")
 
     const generateQRCode = async () => {
@@ -26,7 +29,8 @@ const UPIPaymentViaQr = (props: any) => {
 
     return (
         <Box pt= {6}>
-            <BorderBox text= {`User Property Code : ${userPropertyCode}`}>
+            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                         Pay: ₹ 100
