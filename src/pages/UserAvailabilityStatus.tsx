@@ -5,11 +5,13 @@ import BorderBox from "../components/BorderBox.tsx"
 import { AREA_LIST } from "../utils/AppConstants"
 import { useNavigate } from "react-router-dom";
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
+import { feeCollectionInfo, getAreaConstant } from "../lib/apis/index.ts"
+import { ToastContainer, toast } from "react-toastify";
 
 
 const UserAvailabilityStatus = (props: any) => {
 
-    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+    const { userInfo, updateUserInfo, areaConstant, handleAreaConstant,  }: any = useContext(FeeCollectionContext)
 
     console.log("userInfo", userInfo)
 
@@ -17,14 +19,18 @@ const UserAvailabilityStatus = (props: any) => {
 
     let navigate = useNavigate();
 
+    const [areaList, setAreaList] = useState<any>([])
+
     const [selectedArea, setSelectedArea] = useState<any>("")
     const [areaHelperText, setAreaHelperText] = useState<any>("")
 
     useEffect(() => {
-        if(!userInfo?.propertyCode) {
+        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
+        if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
             navigate("/fee-collection")
         }
-    }, [userInfo])
+        // navigate("/fee-collection")
+    }, [])
 
     const handleOptionChange = (e: any) => {
         let { name, value }: any = e.target;
@@ -33,8 +39,31 @@ const UserAvailabilityStatus = (props: any) => {
             setAreaHelperText("Please choose your area")
         }
         else {
-            updateUserInfo({area: value})
+            // updateUserInfo({area: value})
             setAreaHelperText("")   
+        }
+    }
+
+    const handlefeeCloseCollection = async (redirectionRoute) => {
+        console.log("check", userInfo?.surveyKey, userInfo?.propertyCode)
+        if(userInfo?.propertyCode && userInfo?.surveyKey) {
+            const response = await feeCollectionInfo({
+                ddn: userInfo?.propertyCode,
+                propertyStatus: "CLOSED",
+                collectionStatus: "N.A",
+                createdPlatform: "User-Services-Web",
+                // need to send dynamically
+                survey: userInfo?.surveyKey,
+                // survey: "5f03f560f302935a63901f63"
+            })
+            console.log("222", response)
+            if(response?.data){
+                updateUserInfo({area: selectedArea})
+                navigate(redirectionRoute)
+            }
+            else {
+                toast.error("Unable to fetch data ~")
+            }
         }
     }
 
@@ -43,25 +72,44 @@ const UserAvailabilityStatus = (props: any) => {
             setAreaHelperText("Please choose your area")
         }
         else {
-            navigate(redirectionRoute)
-            // switch(option) {
-            //     case "open" : 
-            //         navigate("/user-available")
-            //         return
+            // navigate(redirectionRoute)
+
+            switch(option) {
+                case "open" : 
+                    updateUserInfo({area: selectedArea})
+                    navigate(redirectionRoute)
+                    // navigate("/user-available")
+                    return
                 
-            //     case "closed" : 
-            //         navigate("/fee-collection")
-            //         return
+                case "closed" :
+                    handlefeeCloseCollection(redirectionRoute) 
+                    // navigate("/fee-collection")
+                    return
 
-            //     case "revisit" : 
-            //         navigate("/revisit")
-            //         return
+                case "revisit" : 
+                    updateUserInfo({area: selectedArea})
+                    navigate("/revisit")
+                    return
 
-            //     default :
-            //         break
-            // }
+                default :
+                    break
+            }
         }
     }
+
+    const callAreaConstants = async () => {
+        const areaResponse = await getAreaConstant()
+        console.log("areaConstant", areaResponse)
+        if(areaResponse?.success) {
+            setAreaList(areaResponse?.data?.areas)
+        }
+    }
+
+    useEffect(() => {
+        callAreaConstants()
+    }, [])
+
+    console.log('areaList', areaList)
 
     return (
         <Box pt= {6}>
@@ -72,7 +120,7 @@ const UserAvailabilityStatus = (props: any) => {
                     <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                         <Box mb= {4} width= {1}>
                             <SelectInput 
-                                options= {AREA_LIST} 
+                                options= {areaList} 
                                 // options={[
                                 //     { label: "Active", value: true },
                                 //     { label: "Inactive", value: false },
@@ -80,11 +128,12 @@ const UserAvailabilityStatus = (props: any) => {
                                 name="status"
                                 label="Select Area"
                                 value={selectedArea}
-                                labelFormat={(obj: any) => `${obj?.value}`}
+                                // labelFormat={(obj: any) => `${obj?.displayName}`}
+                                labelFormat={(obj: any) => `${obj?.displayName.slice(2)}`}
                                 valueFormat={(obj: any) => obj?.value}
                                 onChange={handleOptionChange}
                                 required={true}
-                                helperText="Incorrect entry."
+                                helperText=""
                             />
                             {areaHelperText && areaHelperText!== "" && (
                                 // <Typography>

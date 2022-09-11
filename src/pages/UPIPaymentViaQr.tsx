@@ -3,12 +3,23 @@ import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import BorderBox from "../components/BorderBox.tsx"
 import QRCode from 'qrcode'
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
+import { useNavigate } from "react-router-dom";
 
 const UPIPaymentViaQr = (props: any) => {
+
+    let navigate = useNavigate();
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
     const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
+
+    useEffect(() => {
+        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
+        if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
+            navigate("/fee-collection")
+        }
+        // navigate("/fee-collection")
+    }, [])
 
     const [text, setText] = useState<any>("NW-PPPP-PT-10054")
     const [imgUrl, setImgUrl] = useState<any>("")

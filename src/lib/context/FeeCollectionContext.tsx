@@ -4,11 +4,13 @@ export const FeeCollectionContext = createContext(null)
 
 const FeeCollectionProvider = ({children}) => {
 
+    const [ areaConstant, setAreaConstant ] = useState<any>([])
     const [ feeCollectionList, setFeeCollectionList ] = useState<any>([])
     const [ userInfo, setUserInfo ] = useState<any>({
         propertyCode: "",
         area: "",
-        paymentMethod: ""
+        paymentMethod: "",
+        surveyKey: ""
     })
     
     const updateUserInfo = (updatedObj: any) => {
@@ -20,7 +22,11 @@ const FeeCollectionProvider = ({children}) => {
         setFeeCollectionList(newData)
     }
 
-    const contextValue: any = {feeCollectionList, updateFeeCollectionList, userInfo, updateUserInfo}
+    const handleAreaConstant = (data) => {
+        setAreaConstant(data)
+    }
+
+    const contextValue: any = { feeCollectionList, updateFeeCollectionList, userInfo, updateUserInfo, areaConstant, handleAreaConstant }
 
     
     

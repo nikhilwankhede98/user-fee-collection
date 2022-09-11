@@ -1,10 +1,13 @@
-import React, {useState, useContext} from "react"
+import React, {useState, useContext, useEffect} from "react"
 import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import SelectInput from "../components/SelectInput.tsx"
 import { AREA_LIST } from "../utils/AppConstants"
 import { useNavigate } from "react-router-dom";
 import BorderBox from "../components/BorderBox.tsx"
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
+import { feeCollectionInfo } from "../lib/apis/index.ts"
+import { ToastContainer, toast } from "react-toastify";
+
 
 const UserAvailable = (props: any) => {
 
@@ -13,23 +16,60 @@ const UserAvailable = (props: any) => {
 
     const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
 
+    useEffect(() => {
+        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
+        if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
+            navigate("/fee-collection")
+        }
+        // navigate("/fee-collection")
+    }, [])
+
+    const handlefeeCollectionInfo = async (collectionStatus: any, redirectionRoute) => {
+        const response = await feeCollectionInfo({
+            ddn: userInfo?.propertyCode,
+            propertyStatus: "OPEN",
+            collectionStatus: collectionStatus,
+            createdPlatform: "User-Services-Web",
+            // survey: "5f03f560f302935a63901f63"
+            survey: userInfo?.surveyKey,
+        })
+        console.log("222", response)
+        if(response?.data){
+            navigate(redirectionRoute)
+        }
+        else {
+            toast.error("Unable to fetch data ~")
+        }
+    }
+
     const paymentInfo = (option: any, redirectionRoute: any) => {
-        
+
         switch (option) {
             case "collect-fees" : 
                 navigate(redirectionRoute)
                 break;
 
             case "refused-to-pay" : 
-                navigate(redirectionRoute)
+                handlefeeCollectionInfo("REFUSED_TO_PAY", redirectionRoute)
+                // const yo = feeCollectionInfo({
+                //     ddn: userInfo?.propertyCode,
+                //     propertyStatus: "OPEN",
+                //     collectionStatus: "REFUSED_TO_PAY",
+                //     createdPlatform: "User-Services-Web",
+                //     survey: "5f03f560f302935a63901f63"
+                // })
+                // console.log("yo", yo)
+                // navigate(redirectionRoute)
                 break;
 
             case "refused-service" : 
-                navigate(redirectionRoute)
+                handlefeeCollectionInfo("REFUSED_TO_AVAIL_SERVICE", redirectionRoute)
+                // navigate(redirectionRoute)
                 break;
 
             case "service-to-be-provided" : 
-                navigate(redirectionRoute)
+                // navigate(redirectionRoute)
+                handlefeeCollectionInfo("SERVICE_TO_BE_PROVIDED", redirectionRoute)
                 break;
 
             default : 

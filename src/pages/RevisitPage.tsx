@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DateTimePicker from 'react-datetime-picker';
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
+import { feeCollectionInfo } from "../lib/apis/index.ts"
+import { ToastContainer, toast } from "react-toastify";
+import _ from "lodash"
+
 
 const RevisitPage = (props: any) => {
 
@@ -17,15 +21,25 @@ const RevisitPage = (props: any) => {
     let navigate = useNavigate();
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
-    const handlePaymentButtonClick = (paymentOption: any) => {
-        switch (paymentOption) {
-            case "cash" :
-                navigate("/fee-collection")
-                return
-
-            case "upi" :
-                navigate("/upi-payment")
-                return
+    const handleRevisitCollection = async (redirectionRoute) => {
+        console.log("date", selectedDateTime, new Date(), "Sat Sep 15 2022 12:00:00 GMT+0530 (India Standard Time)")
+        const response = await feeCollectionInfo({
+            ddn: userInfo?.propertyCode,
+            propertyStatus: "REVISIT",
+            collectionStatus: "N.A",
+            createdPlatform: "User-Services-Web",
+            // need to send dynamically
+            survey: userInfo?.surveyKey,
+            // survey: "5f03f560f302935a63901f63",
+            rescheduled: selectedDateTime
+            // rescheduled: "Sat Sep 15 2022 12:00:00 GMT+0530 (India Standard Time)"
+        })
+        console.log("555", response, selectedDateTime)
+        if(response?.data){
+            navigate(redirectionRoute)
+        }
+        else {
+            toast.error("Unable to fetch data ~")
         }
     }
 
@@ -40,11 +54,16 @@ const RevisitPage = (props: any) => {
                         <TextField
                             id="outlined-name"
                             label="Selected Area"
-                            value={userInfo?.area}
+                            // value={_.capitalize(_.lowerCase(userInfo?.area.slice(2).replace(/_/, " ")))}
+                            value={_.startCase(_.camelCase(userInfo?.area.slice(2).replace(/_/, " ")))}
+                            // value={userInfo?.area.replace(/_/," ")}
                             disabled
                             fullWidth
                             size="small"
-                            sx={{ input: { color: "#f2a17e", fontSize: "18px" }}}
+                            InputLabelProps={{
+                                style: { color: "#f2a17e" }
+                            }}
+                            sx={{ input: { color: "#f2a17e" }}}
                         />
                     </Box>
                     <Box mb= {3} width= {1}>
@@ -58,7 +77,7 @@ const RevisitPage = (props: any) => {
                         /> */}
                     </Box>
                     <Box  width= {1}>
-                        <Button variant="contained" color="success" fullWidth onClick = {() => handlePaymentButtonClick("upi")} >
+                        <Button variant="contained" color="success" fullWidth onClick = {() => handleRevisitCollection("/fee-collection")} >
                             Schedule Revisit
                         </Button>
                     </Box>
