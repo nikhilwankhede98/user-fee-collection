@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useContext} from "react"
-import { Typography, Box, Grid} from "@mui/material";
+import { Typography, Box, Grid, OutlinedInput} from "@mui/material";
 import StyledTable from "../components/StyledTable.tsx"
 import { getFeeCollection, getPropertyStatusConstant, getCollectionStatusConstant, getAreaConstant } from "../lib/apis/index.ts"
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 import { ToastContainer, toast } from "react-toastify";
 import SelectInput from "../components/SelectInput.tsx"
 import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import _ from "lodash"
 
 const TitleLabel = (props: any) => {
@@ -98,14 +99,28 @@ const AdminPage = (props: any) => {
         let payload: any = ""
 
         // filter condition
-        if(selectedPropertyType!=="" || selectedCollectionType!=="") {
+        if(selectedPropertyType!=="" || selectedCollectionType!=="" || selectedArea!=="") {
             if(selectedPropertyType) {
                 if(selectedCollectionType) {
-                    payload = `?propertyStatus=${selectedPropertyType}&collectionStatus=${selectedCollectionType}`
+                    if(selectedArea) {
+                        payload = `?propertyStatus=${selectedPropertyType}&collectionStatus=${selectedCollectionType}&area=${selectedArea}`
+                    }
+                    else payload = `?propertyStatus=${selectedPropertyType}&collectionStatus=${selectedCollectionType}`
+                }
+                else if(selectedArea) {
+                    payload = `?propertyStatus=${selectedPropertyType}&area=${selectedArea}`
                 }
                 else payload = `?propertyStatus=${selectedPropertyType}`
             }
-            else payload = `?collectionStatus=${selectedCollectionType}`
+            else if (selectedCollectionType) {
+                if(selectedArea) {
+                    payload = `?collectionStatus=${selectedCollectionType}&area=${selectedArea}`
+                }
+                else payload = `?collectionStatus=${selectedCollectionType}`
+            }
+            else if (selectedArea) {
+                payload = `?area=${selectedArea}`
+            }
         }
         console.log("payload", payload)
 
@@ -130,13 +145,30 @@ const AdminPage = (props: any) => {
         //     getCollection()
         // }
         getCollection()
-    }, [selectedPropertyType, selectedCollectionType])
+    }, [selectedPropertyType, selectedCollectionType, selectedArea])
 
     useEffect(() => {
         getCollection()
     }, [])
 
     console.log("constant", areaListConstant)
+
+    const handleClearClick = (type: any) => {
+        switch (type) {
+            case "AREA" : 
+                setSelectedArea("")
+                break;
+            
+            case "PROPERTY" : 
+                setSelectedPropertyType("")
+                break;
+            
+            case "COLLECTION" : 
+                setSelectedCollectionType("")
+                break;
+            
+        }
+    }
 
     return (
         <Box width= {1} pt= {5} pb= {4}>
@@ -163,6 +195,8 @@ const AdminPage = (props: any) => {
                         onChange={(e) => handleChangeFilter(e, "AREA")}
                         required={true}
                         helperText=""
+                        sx={{"& .MuiSelect-iconOutlined": {display: selectedArea? 'none': ''}, "&.Mui-focused .MuiIconButton-root": {color: 'primary.main'}}}
+                        endAdornment={<IconButton sx={{visibility: selectedArea? "visible": "hidden"}} onClick={() => handleClearClick("AREA")}><ClearIcon/></IconButton>}
                     />
                 </Grid>
                 <Grid item xs= {2} sx= {{mr: 2}}>
@@ -178,6 +212,8 @@ const AdminPage = (props: any) => {
                         onChange={(e) => handleChangeFilter(e, "PROPERTY")}
                         required={true}
                         helperText=""
+                        sx={{"& .MuiSelect-iconOutlined": {display: selectedPropertyType? 'none': ''}, "&.Mui-focused .MuiIconButton-root": {color: 'primary.main'}}}
+                        endAdornment={<IconButton sx={{visibility: selectedPropertyType? "visible": "hidden"}} onClick={() => handleClearClick("PROPERTY")}><ClearIcon/></IconButton>}
                     />
                 </Grid>
                 <Grid item xs= {2}>
@@ -192,10 +228,12 @@ const AdminPage = (props: any) => {
                         onChange={(e) => handleChangeFilter(e, "COLLECTION")}
                         required={true}
                         helperText=""
+                        sx={{"& .MuiSelect-iconOutlined": {display: selectedCollectionType? 'none': ''}, "&.Mui-focused .MuiIconButton-root": {color: 'primary.main'}}}
+                        endAdornment={<IconButton sx={{visibility: selectedCollectionType? "visible": "hidden"}} onClick={() => handleClearClick("COLLECTION")}><ClearIcon/></IconButton>}
                     />
                 </Grid>
             </Grid>
-           <StyledTable isAdmin dataList= {feeCollectionList}/> 
+           <StyledTable isAdmin dataList= {feeCollectionList}  /> 
         </Box>
     )
 }

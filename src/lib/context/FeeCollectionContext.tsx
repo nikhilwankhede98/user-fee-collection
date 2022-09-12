@@ -28,12 +28,15 @@ const FeeCollectionProvider = ({children}) => {
 
     const [ userInfo, setUserInfo ] = useState<any>({
         propertyCode: "",
+        ownerName: "",
+        contactNumber: "",
         area: "",
         paymentMethod: "",
         surveyKey: "",
         amount: null,
         upiQRCodeUrl: "",
-        feeCollectionId: ""
+        feeCollectionId: "",
+
     })
     
     const updateUserInfo = (updatedObj: any) => {

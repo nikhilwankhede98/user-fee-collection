@@ -30,8 +30,6 @@ const FeeCollectPage = (props: any) => {
         getCollection()
     }, [])
 
-    console.log("feeCollectionList", feeCollectionList)
-
     return (
         <Box width= {1} pt= {5} pb= {2}>
            <StyledTable dataList= {feeCollectionList} /> 

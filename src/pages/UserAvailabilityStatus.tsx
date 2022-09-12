@@ -119,8 +119,8 @@ const UserAvailabilityStatus = (props: any) => {
 
     return (
         <Box pt= {6}>
-            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
-            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`} hasCustomBackMethod customBackMethod= {customBackMethod}>
+            {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`} hasCustomBackMethod customBackMethod= {customBackMethod}>
                 {/* <Box width= {1} >
                 <Box width= {1} py= {2}  display= "flex" flexDirection= "column" justifyContent= "center" alignItems= "center" minHeight= "400px" border= "1px solid green"> */}
                     <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">

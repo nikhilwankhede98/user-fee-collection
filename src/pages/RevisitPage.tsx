@@ -47,8 +47,8 @@ const RevisitPage = (props: any) => {
 
     return (
         <Box pt= {6}>
-            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
-            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
+            {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Box mb= {3} width= {1}>
                         <TextField

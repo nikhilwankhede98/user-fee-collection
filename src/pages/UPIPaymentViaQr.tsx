@@ -3,7 +3,7 @@ import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import BorderBox from "../components/BorderBox.tsx"
 import QRCode from 'qrcode'
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
-import { updatePaymentCollectionStatus } from "../lib/apis/index.ts"
+import { updatePaymentCollectionStatus, getReceiptsPdf } from "../lib/apis/index.ts"
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +51,7 @@ const UPIPaymentViaQr = (props: any) => {
             }
         })
         if(response?.data){
+            window.open(`https://universal-code.recity.in/v1/fee-collections/receipts/${response?.data?.feeCollection?._id}`)
             navigate("/fee-collection")
         }
         else {
@@ -63,8 +64,8 @@ const UPIPaymentViaQr = (props: any) => {
 
     return (
         <Box pt= {6}>
-            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
-            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
+            {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                         {`Pay: ₹ ${userInfo?.amount}`}

@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 import { getPropertyDetails } from "../lib/apis/index.ts"
 import { ToastContainer, toast } from "react-toastify";
+import audio from "../assets/audio/audio2.mp3"
+import {Howl, Howler} from 'howler';
+// import logo from "../assets/images/logo.jpg"
 
 const ScanPropertyCode = (props: any) => {
 
@@ -16,9 +19,11 @@ const ScanPropertyCode = (props: any) => {
     const [delay, setDelay] = useState<any>(500)
     const [result, setResult] = useState<any>('')
 
-    useEffect(() => {
-        console.log("test", userInfo?.surveyKey, userInfo?.propertyCode, result)
-    }, [])
+
+    const sound = new Howl({
+        src: audio
+      });
+
 
     const handleScan = async (data: any) => {
         console.log("scanned", data)
@@ -28,6 +33,9 @@ const ScanPropertyCode = (props: any) => {
                 const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
                 // const propertyDetailResponse = await getPropertyDetails(data?.textdata?.text)
                 if(propertyDetailResponse?.success) {
+                    // audio.play()
+                    // audio1.play()
+                    sound?.play();
                     await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id})
                 }
             }

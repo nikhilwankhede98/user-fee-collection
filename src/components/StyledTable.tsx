@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useContext} from "react"
 import _ from "lodash"
 import {
     Paper,
@@ -20,12 +20,15 @@ import { COLLECTION_FEES_DATA_HEADCELLS, COLLECTION_FEES_DATA } from "../utils/A
 import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from "react-router-dom";
+import EmptyRecords from "./EmptyRecords.tsx"
+import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
 
 const StyledTable = (props: any) => {
 
     let navigate = useNavigate();
 
     const { isAdmin= false, dataList } = props
+    const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
 
     const [updatedArray, setUpdatedArray] = useState<any>([])
     // useEffect(() => {
@@ -53,6 +56,7 @@ const StyledTable = (props: any) => {
         newCollection.propertyStatus = _.capitalize(collection.propertyStatus) || "-"
         newCollection.collectionStatus =  collection.collectionStatus ? _.startCase(_.camelCase(collection.collectionStatus)) : "-"
         newCollection.paymentType = collection && collection.payment && _.capitalize(collection.payment.type) || ""
+        newCollection.paymentStatus = collection && collection.payment && _.capitalize(collection.payment.status) || ""
         newCollection.amount = collection && collection.payment && parseFloat(collection.payment.amount).toFixed(2) || ""
         tableFeeCollections?.push(newCollection)
     });
@@ -66,7 +70,8 @@ const StyledTable = (props: any) => {
         {id: 5, columnName: "Property Status"},
         {id: 6, columnName: "Collection Status"},
         {id: 8, columnName: "Payment Type"},
-        {id: 9, columnName: "Amount"},
+        {id: 9, columnName: "Payment Status"},
+        {id: 10, columnName: "Amount"},
     ]
 
     useEffect(() => {
@@ -124,6 +129,13 @@ const StyledTable = (props: any) => {
             ))
             : _.capitalize(getValue(value))
     };
+
+    const handleCollectFeeBtn = () => {
+        // if(userInfo?.propertyCode) {
+        //     updateUserInfo({propertyCode: ""})
+        // }
+        navigate("/scan-property-code")
+    }
       
     return (
         <Box width= {1}>
@@ -139,7 +151,7 @@ const StyledTable = (props: any) => {
             {!isAdmin && (
                 <Box display= "flex" justifyContent= "flex-end">
                     {/* <Button variant="contained" sx= {{backgroundColor: "#cb7871"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/user-availablity-status")}> */}
-                    <Button variant="contained" sx= {{backgroundColor: "#df736a"}} startIcon={<AddCircleIcon />} onClick= {() => navigate("/scan-property-code")}>
+                    <Button variant="contained" sx= {{backgroundColor: "#df736a"}} startIcon={<AddCircleIcon />} onClick= {handleCollectFeeBtn}>
                         Collect Fee
                     </Button>
                     {/* <Box>
@@ -168,7 +180,7 @@ const StyledTable = (props: any) => {
                         <TableHead>
                             <TableRow sx= {{backgroundColor: "#27878e", color: "white"}}>
                                 {/* {COLLECTION_FEES_DATA_HEADCELLS?.map(headCell => ( */}
-                                {headCells.map(headCell => (
+                                {headCells?.map(headCell => (
                                     <TableCell
                                         // className = { classes.tableCellHead}
                                         key={headCell?.id}
@@ -199,51 +211,46 @@ const StyledTable = (props: any) => {
 
                         {/* TABLE BODY */}
                         <TableBody>
-                            {/* { dataList?.map(row => ( */}
-                            { tableFeeCollections?.map((row, index) => (
-                            // { COLLECTION_FEES_DATA?.map(row => (
-                                <TableRow
-                                hover
-                                // onClick={(event) => handleClick(event, row.name)}
-                                role="checkbox"
-                                tabIndex={-1}
-                                key={row?.index}
-                                // selected={isItemSelected}
-                                >
-                                {/* { COLLECTION_FEES_DATA_HEADCELLS?.map((column, index) => {
-                                    const value = _.get(
-                                        row,
-                                        column.columnId
-                                    ); */}
-                                    {/* return ( */}
-                                    {Object.values(row)?.map((objectItem:any) => (
-                                        <TableCell
-                                            align= "left"
-                                            style={{
-                                                verticalAlign:
-                                                    "baseline",
-                                                maxWidth: "500px",
-                                                overflowWrap:
-                                                    "break-word",
-                                                right: "0.5px",
-                                                left: "0.5px",
-                                            }}
-                                        >
-                                                <Typography
-                                                    // className={
-                                                    //     classes.text
-                                                    // }
-                                                    sx= {{color: "#606060", fontWeight: 500}}
-                                                >
-                                                    {objectItem || "-"}
-                                                </Typography>
-                                        </TableCell>
-                                    ))}
-
-                                    {/* ) */}
-                                {/* })} */}
+                            { _.isEmpty(tableFeeCollections) ? (
+                                <TableRow>
+                                    <TableCell colSpan={headCells?.length} >
+                                        <EmptyRecords />
+                                    </TableCell>
                                 </TableRow>
-                            ))}
+                            ) : 
+                                tableFeeCollections?.map((row, index) => (
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        tabIndex={-1}
+                                        key={row?.index}
+                                    >
+                                        {Object.values(row)?.map((objectItem:any) => (
+                                            <TableCell
+                                                align= "left"
+                                                style={{
+                                                    verticalAlign:
+                                                        "baseline",
+                                                    maxWidth: "500px",
+                                                    overflowWrap:
+                                                        "break-word",
+                                                    right: "0.5px",
+                                                    left: "0.5px",
+                                                }}
+                                            >
+                                                    <Typography
+                                                        // className={
+                                                        //     classes.text
+                                                        // }
+                                                        sx= {{color: "#606060", fontWeight: 500}}
+                                                    >
+                                                        {objectItem || "-"}
+                                                    </Typography>
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>

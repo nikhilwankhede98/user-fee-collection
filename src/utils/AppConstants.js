@@ -87,3 +87,18 @@ export const COLLECTION_FEES_DATA = Object.freeze([
         date: "09/10/2022"
     }
 ]);
+
+export const MONTH_OPTIONS = [
+    'January', 
+    'February', 
+    'March', 
+    'April', 
+    'May', 
+    'June', 
+    'July', 
+    'August', 
+    'September', 
+    'October', 
+    'November', 
+    'December'
+]

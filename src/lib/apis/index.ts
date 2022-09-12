@@ -86,4 +86,13 @@ export const getCollectionStatusConstant = async (payload) => {
     return data
 }
 
+export const getReceiptsPdf = async (payload) => {
+    const ENDPOINT = `/fee-collections/receipts/${payload}`
+    const response= await fetch(`${API_BASE_URL}${API_VERSION}${ENDPOINT}`)
+    console.log('receipt pdf', response)
+    const data= await response.json()
+    console.log('receipt pdf', response, data)
+    return data
+}
+
 

@@ -80,10 +80,10 @@ const UserAvailable = (props: any) => {
 
     return (
         <Box pt= {6}>
-            {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
-            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
+            {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
+            <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`}>
                 {/* <Typography color= "#27878e" sx= {{fontWeight: 600, fontSize: "20px", fontFamily: "Montserrat", mb: 6}}>
-                    {`User Property Code : ${userPropertyCode}`} 
+                    {`Property Code : ${userPropertyCode}`} 
                 </Typography> */}
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Box mb= {3} width= {1}>
