@@ -163,13 +163,13 @@ const AdminPage = (props: any) => {
 
     return (
         <Box width= {1} pt= {5} pb= {4}>
-            <Box width= {1}>
+            <Box width= {1} mb= {{xs:2, sm:2,md: 0}}>
                 <TitleLabel text= "Collection Fee List" textColor= "#27878e">
                     <LabelImportantOutlinedIcon style= {{color: "#27878e"}} />
                 </TitleLabel>
             </Box>
             <Grid container justifyContent= "flex-end">
-                <Grid item xs= {2} sx= {{mr: 2}}>
+                <Grid item xs= {12} sm= {12} md= {2} sx= {{mr: {xs: 0, sm: 0,md: 2}, mb: {xs: 2, sm: 2,md: 0}}}>
                     <SelectInput 
                         options= {areaListConstant} 
                         // options={[
@@ -190,7 +190,7 @@ const AdminPage = (props: any) => {
                         endAdornment={<IconButton sx={{visibility: selectedArea? "visible": "hidden"}} onClick={() => handleClearClick("AREA")}><ClearIcon/></IconButton>}
                     />
                 </Grid>
-                <Grid item xs= {2} sx= {{mr: 2}}>
+                <Grid item xs= {12} sm= {12} md= {2} sx= {{mr: {xs: 0, sm: 0,md: 2}, mb: {xs: 2, sm: 2,md: 0}}}>
                     <SelectInput 
                         options= {propertyStatusConstant} 
                         name="property-type"
@@ -207,7 +207,7 @@ const AdminPage = (props: any) => {
                         endAdornment={<IconButton sx={{visibility: selectedPropertyType? "visible": "hidden"}} onClick={() => handleClearClick("PROPERTY")}><ClearIcon/></IconButton>}
                     />
                 </Grid>
-                <Grid item xs= {2}>
+                <Grid item xs= {12} sm= {12} md= {2}>
                     <SelectInput 
                         options= {collectionStatusConstant} 
                         name="collection-type"

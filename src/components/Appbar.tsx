@@ -4,11 +4,13 @@ import {
     Box,
     styled,
     Typography,
+    useMediaQuery, 
+    useTheme
 } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import logo from "../assets/images/logo.jpg"
-
+import logoo from "../assets/images/logoo.png"
 
 export const APPBAR_HEIGHT = {
     xs: 56,
@@ -26,6 +28,9 @@ const StyledMainAppbar = styled(AppBar)(({ theme }) => ({
 }));
 
 const MainAppbar = (props) => {
+
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
         <StyledMainAppbar
@@ -55,8 +60,8 @@ const MainAppbar = (props) => {
                 <Box display= "flex" alignItems= "center" width= {1}>
                     <a href= "/" style= {{textDecoration: "none", color: "white" }}>
                         <Box display= "flex" alignItems= "center" width= {1}>
-                            <img src= {logo} alt= "logo" style= {{height: "22px", width: "22px"}} />
-                            <Typography variant= "h5" sx= {{
+                            <img src= {logoo} alt= "logo" style= {{height: "25px", width: "50px"}} />
+                            {/* <Typography variant= "h5" sx= {{
                                     "&:hover": {
                                         cursor: "pointer",
                                     },
@@ -64,16 +69,16 @@ const MainAppbar = (props) => {
                                 }}
                             >
                                 Recity
-                            </Typography>
+                            </Typography> */}
                         </Box>
                     </a>
-                    <Link to="/fee-collection" style={{ textDecoration: 'none', marginLeft: "60px" }}>
-                        <Typography variant= "h6" color= "#FFFFFF99" sx= {{fontWeight: 600}}>
+                    <Link to="/fee-collection" style={{ textDecoration: 'none', marginLeft: isMobile ? "20px" : "60px" }}>
+                        <Typography variant= "h6" color= "#FFFFFF99" sx= {{fontWeight: 600, fontSize: isMobile ? "16px!important" : "20px!important"}}>
                             Collect Fee
                         </Typography>
                     </Link>
-                    <Link to="/admin" style={{ textDecoration: 'none', marginLeft: "30px" }}>
-                        <Typography variant= "h6" color= "#FFFFFF99" sx= {{fontWeight: 600}}>
+                    <Link to="/admin" style={{ textDecoration: 'none', marginLeft: isMobile ? "15px" :  "30px" }}>
+                        <Typography variant= "h6" color= "#FFFFFF99" sx= {{fontWeight: 600, fontSize: isMobile ? "16px!important" : "20px!important"}}>
                             Admin
                         </Typography>
                     </Link>
