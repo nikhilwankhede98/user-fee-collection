@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react"
-import _ from "lodash"
+import { format, isValid, toDate } from "date-fns";
+import _ from "lodash";
 import {
     Paper,
     Table,
@@ -46,6 +47,19 @@ const StyledTable = (props: any) => {
     const feeCollections = [] // from api
     let tableFeeCollections: any = [];
 
+    const stringToDateTime = (str: string, dateFormat?: string) => {
+        var originalDate = new Date(str);
+        let formatString = dateFormat || "dd/MM/yyyy HH:mm"
+        var epochDate = new Date(Number(str));
+        if (isValid(originalDate)) {
+            return format(originalDate, formatString);
+        }
+        else if (isValid(epochDate)) {
+            return format(epochDate, formatString);
+        }
+        else return str;
+    };
+
     dataList?.forEach((collection, index) => {
         const newCollection: any = {}
         newCollection.srNo = index + 1
@@ -58,6 +72,7 @@ const StyledTable = (props: any) => {
         newCollection.paymentType = collection && collection.payment && _.capitalize(collection.payment.type) || ""
         newCollection.paymentStatus = collection && collection.payment && _.capitalize(collection.payment.status) || ""
         newCollection.amount = collection && collection.payment && parseFloat(collection.payment.amount).toFixed(2) || ""
+        newCollection.createdAt= collection && collection.createdAt && stringToDateTime(collection.createdAt) || ""
         tableFeeCollections?.push(newCollection)
     });
 
@@ -72,6 +87,7 @@ const StyledTable = (props: any) => {
         {id: 8, columnName: "Payment Type"},
         {id: 9, columnName: "Payment Status"},
         {id: 10, columnName: "Amount"},
+        {id: 11, columnName: "Created At"},
     ]
 
     useEffect(() => {
