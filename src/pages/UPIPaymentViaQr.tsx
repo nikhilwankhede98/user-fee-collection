@@ -51,6 +51,9 @@ const UPIPaymentViaQr = (props: any) => {
             }
         })
         if(response?.data){
+            if(response?.message) {
+                toast.success(response?.message)
+            }
             window.open(`https://universal-code.recity.in/v1/fee-collections/receipts/${response?.data?.feeCollection?._id}`)
             navigate("/fee-collection")
         }

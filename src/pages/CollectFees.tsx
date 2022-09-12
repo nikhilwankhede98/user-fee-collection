@@ -69,6 +69,9 @@ const CollectFees = (props: any) => {
             })
             console.log("hnh", response, response?.data?.feeCollection?._id)
             if(response?.data){
+                if(response?.message) {
+                    toast.success(response?.message)
+                }
                 // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
                 if(paymentOption === "UPI") {
                     setUpiQRCodeUrl(response?.data?.payment?.data?.url)

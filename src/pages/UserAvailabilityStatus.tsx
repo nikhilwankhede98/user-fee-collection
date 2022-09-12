@@ -59,6 +59,9 @@ const UserAvailabilityStatus = (props: any) => {
             })
             console.log("222", response)
             if(response?.data){
+                if(response?.message) {
+                    toast.success(response?.message)
+                }
                 updateUserInfo({area: selectedArea})
                 navigate(redirectionRoute)
             }

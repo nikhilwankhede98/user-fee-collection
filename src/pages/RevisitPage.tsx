@@ -36,6 +36,9 @@ const RevisitPage = (props: any) => {
         })
         console.log("555", response, selectedDateTime)
         if(response?.data){
+            if(response?.message) {
+                toast.success(response?.message)
+            }
             navigate(redirectionRoute)
         }
         else {
