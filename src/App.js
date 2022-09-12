@@ -37,7 +37,7 @@ function App() {
               <MainAppbar />
                 <Box px= {{xs: "1rem", md: "2rem"}} >
                     <Routes>
-                      <Route path="/" element={ <Homepage /> } />
+                      {/* <Route path="/" element={ <Homepage /> } /> */}
                       <Route path="/admin" element={<AdminPage />} />
                       <Route path="/fee-collection" element={<FeeCollectPage />} />
                       <Route path="/scan-property-code" element={<ScanPropertyCode />} />
@@ -46,6 +46,7 @@ function App() {
                       <Route path="/collect-fees" element={<CollectFees />} />
                       <Route path="/upi-payment" element={<UPIPaymentViaQr />} />
                       <Route path="/revisit" element={<RevisitPage />} />
+                      <Route path="*" element= { <FeeCollectPage />} />
                     </Routes>
                   {/* <MainComponent /> */}
                   {/* {false ? (
