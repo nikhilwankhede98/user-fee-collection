@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from "react"
 import { Typography, Box, FormHelperText, Button, TextField, OutlinedInput } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
 import BorderBox from "../components/BorderBox.tsx"
 import { useNavigate } from "react-router-dom";
 import Select from "@mui/material/Select";
@@ -13,6 +14,7 @@ import SelectInput from "../components/SelectInput.tsx"
 import { ToastContainer, toast } from "react-toastify";
 import { MONTH_OPTIONS } from "../utils/AppConstants"
 import moment from 'moment';
+import _ from "lodash"
 
 const CollectFees = (props: any) => {
 
@@ -45,8 +47,11 @@ const CollectFees = (props: any) => {
     }
 
     const handlePayment = async (paymentOption: any, redirectionRoute: any) => {
-        if(!enteredAmount || enteredAmount === "") {
-            setHelperText("Please enter an amount") 
+        // if(!enteredAmount || enteredAmount === "") {
+        //     setHelperText("Please enter an amount") 
+        // }
+        if(!selectedMonths || _.isEmpty(selectedMonths)) {
+            setHelperText("This field is required") 
         }
         else {
             const response = await feeCollectionInfo({
@@ -66,42 +71,12 @@ const CollectFees = (props: any) => {
             if(response?.data){
                 // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
                 if(paymentOption === "UPI") {
-                    console.log("hnh", response?.data?.feeCollection?._id)
-                    // setFeeCollectionId(response?.data?.feeCollection?._id)
                     setUpiQRCodeUrl(response?.data?.payment?.data?.url)
                     updateUserInfo({feeCollectionId: response?.data?.feeCollection?._id})
-                    // setUpiQRCodeUrl(response?.data?.payment?.data?.url)
-                    // updateUserInfo({upiQRCodeUrl: response?.data?.payment?.data?.url})
-                    // updateUserInfo({feeCollectionId: response?.data?.feeCollection?._id})
-                    // updateUserInfo({upiQRCodeUrl: response?.data?.payment?.data?.url})
                 }
                 else {
-                    // updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
-                    // const pdfWindow: any = window.open();
-                    // pdfWindow?.location?.href = await getReceiptsPdf(response?.data?.feeCollection?._id)
-                    // // navigate(redirectionRoute)
-                    // const receiptPdfResponse = await getReceiptsPdf(response?.data?.feeCollection?._id)
-                    // console.log("receiptPdfResponse", receiptPdfResponse)
-                    // // window.open(getReceiptsPdf(response?.data?.feeCollection?._id))
-                    // const file = new Blob([receiptPdfResponse], { type: "application/pdf" });
-                    // const fileURL = URL.createObjectURL(file);
-                    // const pdfWindow = window.open();
-                    // pdfWindow?.location.href = fileURL; 
                     window.open(`https://universal-code.recity.in/v1/fee-collections/receipts/${response?.data?.feeCollection?._id}`)
                     navigate(redirectionRoute)
-                    // 
-                    // receiptPdfResponse.blob().then(res => console.log("responsss", res))
-                    // const data = window.URL.createObjectURL(receiptPdfResponse);
-                    // const link = document?.createElement("a");
-                    // link.href = data;
-                    // link.download="file.pdf";
-                    // document.body.appendChild(link);
-                    // link.click();
-                    // setTimeout(() => {
-                    //     // For Firefox it is necessary to delay revoking the ObjectURL
-                    //     document.body.removeChild(link);
-                    //     window.URL.revokeObjectURL(data);
-                    // }, 100)
                 }
                 // navigate(redirectionRoute)
 
@@ -199,7 +174,7 @@ const CollectFees = (props: any) => {
           style: {
             maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
             width: 250,
-            maxWidth: 250
+            maxWidth: 250,
           },
         },
     };
@@ -210,6 +185,7 @@ const CollectFees = (props: any) => {
         } = event;
         console.log('value', value)
         setSelectedMonths(value);
+        setEnteredAmount(value?.length * 30)
       };
 
       const newArray = selectedMonths?.map(x => `${moment().month(x).format("MM")}-2022`)
@@ -223,8 +199,14 @@ const CollectFees = (props: any) => {
                     {/* <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                         Pay: ₹ 100
                     </Typography> */}
+                    {selectedMonths?.length > 0 && (
+                        <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
+                            {`Amount : ₹${parseFloat((selectedMonths?.length * 30).toFixed(2))}`}
+                        </Typography>
+                    )}
+                    
                     <FormControl style={{width: 250}}>
-                        <Box mb= {3} width= {1}>
+                        {/* <Box mb= {3} width= {1}>
                             <TextField 
                                 InputLabelProps={{
                                     style: { color: "#f2a17e" }
@@ -246,19 +228,41 @@ const CollectFees = (props: any) => {
                                     // </Typography>
                                     <FormHelperText id="my-helper-text" error>{helperText}</FormHelperText>
                                 )}
-                        </Box>
+                        </Box> */}
                         <Box mb= {3} width= {1}>
+                            <InputLabel
+                                sx= {{
+                                    color: "#f2a17e",
+                                    fontSize: "1rem",
+                                    // "& .Mui-focused": {
+                                    //     color: "orange"
+                                    // }
+                                }}
+                                // classes={{
+                                //     focused: { color: "#27878E!important"},
+                                //     root: {color: themeObj?.labelTextColor
+                                //         ? themeObj?.labelTextColor
+                                //         : "#f2a17e",
+                                //     fontSize: "1rem"},
+                                // }}
+                                id={"months"}
+                                // {...InputLabelProps}
+                            >
+                                {"Select Month(s)"}
+                            </InputLabel>
                             <Select
                                 labelId="demo-multiple-checkbox-label"
                                 id="demo-multiple-checkbox"
                                 multiple
                                 value={selectedMonths}
                                 onChange={handleChange}
-                                input={<OutlinedInput label="Tag" />}
+                                // input={<OutlinedInput label="Tag" />}
                                 renderValue={(selected) => selected.join(', ')}
                                 MenuProps={MenuProps}
                                 fullWidth
                                 size= "small"
+                                // label= "Select Month(s)"
+                                placeholder= "Select Month(s)"
                             >
                                 {/* {MONTH_OPTIONS.map((variant, index) => (
                                     <MenuItem key={index} value={variant?.name}>
@@ -273,6 +277,9 @@ const CollectFees = (props: any) => {
                                     </MenuItem>
                                 ))}
                             </Select>
+                            {helperText && helperText!== "" && (
+                                <FormHelperText id="my-helper-text" error>{helperText}</FormHelperText>
+                            )}
                         </Box>
                     </FormControl>
                     <Box mb= {3} width= {1}>

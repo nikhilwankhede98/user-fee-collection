@@ -38,6 +38,9 @@ const ScanPropertyCode = (props: any) => {
                     sound?.play();
                     await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id})
                 }
+                else {
+                    toast.error("Unable to fetch data ~")
+                }
             }
         }
     }
