@@ -70,6 +70,15 @@ const UPIPaymentViaQr = (props: any) => {
             {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
             <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`}>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
+                    <Box width= {1} display= "flex" alignItems= "center" flexDirection= "column" mb= {2}>
+                        <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat", mb: 1}}>
+                            {`Owner Name : ${userInfo?.ownerName}`}
+                        </Typography>
+
+                        <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat"}}>
+                            {`Contact Number : ${userInfo?.contactNumber}`}
+                        </Typography>
+                    </Box>
                     <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                         {`Pay: ₹ ${userInfo?.amount}`}
                     </Typography>

@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react"
-import { Box, Button, TextField,} from "@mui/material";
+import { Box, Button, TextField, Typography} from "@mui/material";
 import BorderBox from "../components/BorderBox.tsx"
 import StyledDatePicker from "../components/StyledDatePicker.tsx"
 import { useNavigate } from "react-router-dom";
@@ -52,6 +52,15 @@ const RevisitPage = (props: any) => {
         <Box pt= {6}>
             {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
             <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`}>
+                <Box width= {1} display= "flex" alignItems= "center" flexDirection= "column" mb= {2}>
+                    <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat", mb: 1}}>
+                        {`Owner Name : ${userInfo?.ownerName}`}
+                    </Typography>
+
+                    <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat"}}>
+                        {`Contact Number : ${userInfo?.contactNumber}`}
+                    </Typography>
+                </Box>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Box mb= {3} width= {1}>
                         <TextField

@@ -33,10 +33,8 @@ const ScanPropertyCode = (props: any) => {
                 const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
                 // const propertyDetailResponse = await getPropertyDetails(data?.textdata?.text)
                 if(propertyDetailResponse?.success) {
-                    // audio.play()
-                    // audio1.play()
-                    sound?.play();
-                    await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id})
+                    // sound?.play();
+                    await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id, ownerName: propertyDetailResponse?.data?.propertyOwnerName, contactNumber: propertyDetailResponse?.data?.contactNumber})
                 }
                 else {
                     toast.error("Unable to fetch data ~")

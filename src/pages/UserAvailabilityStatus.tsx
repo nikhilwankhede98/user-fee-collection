@@ -126,6 +126,15 @@ const UserAvailabilityStatus = (props: any) => {
             <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`} hasCustomBackMethod customBackMethod= {customBackMethod}>
                 {/* <Box width= {1} >
                 <Box width= {1} py= {2}  display= "flex" flexDirection= "column" justifyContent= "center" alignItems= "center" minHeight= "400px" border= "1px solid green"> */}
+                    <Box width= {1} display= "flex" alignItems= "center" flexDirection= "column" mb= {2}>
+                        <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat", mb: 1}}>
+                            {`Owner Name : ${userInfo?.ownerName}`}
+                        </Typography>
+
+                        <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat"}}>
+                            {`Contact Number : ${userInfo?.contactNumber}`}
+                        </Typography>
+                    </Box>
                     <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                         <Box mb= {4} width= {1}>
                             <SelectInput 

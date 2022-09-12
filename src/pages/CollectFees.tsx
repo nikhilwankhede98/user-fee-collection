@@ -202,6 +202,16 @@ const CollectFees = (props: any) => {
                     {/* <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                         Pay: ₹ 100
                     </Typography> */}
+                    <Box width= {1} display= "flex" alignItems= "center" flexDirection= "column" mb= {2}>
+                        <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat", mb: 1}}>
+                            {`Owner Name : ${userInfo?.ownerName}`}
+                        </Typography>
+
+                        <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat"}}>
+                            {`Contact Number : ${userInfo?.contactNumber}`}
+                        </Typography>
+                    </Box>
+                    
                     {selectedMonths?.length > 0 && (
                         <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
                             {`Amount : ₹${parseFloat((selectedMonths?.length * 30).toFixed(2))}`}

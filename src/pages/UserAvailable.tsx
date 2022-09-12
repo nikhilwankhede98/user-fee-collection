@@ -88,6 +88,15 @@ const UserAvailable = (props: any) => {
                 {/* <Typography color= "#27878e" sx= {{fontWeight: 600, fontSize: "20px", fontFamily: "Montserrat", mb: 6}}>
                     {`Property Code : ${userPropertyCode}`} 
                 </Typography> */}
+                <Box width= {1} display= "flex" alignItems= "center" flexDirection= "column" mb= {2}>
+                    <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat", mb: 1}}>
+                        {`Owner Name : ${userInfo?.ownerName}`}
+                    </Typography>
+
+                    <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat"}}>
+                        {`Contact Number : ${userInfo?.contactNumber}`}
+                    </Typography>
+                </Box>
                 <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">
                     <Box mb= {3} width= {1}>
                         <Button variant="contained" color="success" fullWidth onClick = {() => paymentInfo("collect-fees", "/collect-fees")} >
