@@ -41,7 +41,7 @@ const StyledTable = (props: any) => {
     // }, [dataList])
 
     const feeCollections = [] // from api
-    const tableFeeCollections: any = [];
+    let tableFeeCollections: any = [];
 
     dataList?.forEach((collection, index) => {
         const newCollection: any = {}
@@ -69,9 +69,8 @@ const StyledTable = (props: any) => {
         {id: 9, columnName: "Amount"},
     ]
 
-    console.log("tableFeeCollections", tableFeeCollections)
-
     useEffect(() => {
+        console.log("111")
         setUpdatedArray(tableFeeCollections)
     }, [tableFeeCollections])
 
@@ -128,13 +127,13 @@ const StyledTable = (props: any) => {
       
     return (
         <Box width= {1}>
-            {isAdmin && (
+            {/* {isAdmin && (
                 <Box width= {1}>
                     <TitleLabel text= "Collection Fee List" textColor= "#27878e">
                         <LabelImportantOutlinedIcon style= {{color: "#27878e"}} />
                     </TitleLabel>
                 </Box>
-            )}
+            )} */}
 
             {/* ADD FEE / ADMIN TABLE FILTERS */}
             {!isAdmin && (

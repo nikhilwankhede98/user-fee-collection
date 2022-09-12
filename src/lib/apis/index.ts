@@ -4,10 +4,10 @@ const {
 } = process.env;
 
 
-export const getFeeCollection = async () => {
+export const getFeeCollection = async (payload: any) => {
 
     // console.log("aaa", REACT_APP_API_BASE_URL)
-    const ENDPOINT = "/fee-collections"
+    const ENDPOINT = payload ? `/fee-collections${payload}` :"/fee-collections"
     const response= await fetch(`${API_BASE_URL}${API_VERSION}${ENDPOINT}`)
     console.log('response', response)
     const data= await response.json()
@@ -65,6 +65,24 @@ export const updatePaymentCollectionStatus = async (payload) => {
     console.log('response', response)
     const data= await response.json()
     console.log('111', response)
+    return data
+}
+
+export const getPropertyStatusConstant = async (payload) => {
+    const ENDPOINT = "/fee-collections/property-statuses"
+    const response= await fetch(`${API_BASE_URL}${API_VERSION}${ENDPOINT}`)
+    console.log('propertyStatus', response)
+    const data= await response.json()
+    console.log('propertyStatus', response, data)
+    return data
+}
+
+export const getCollectionStatusConstant = async (payload) => {
+    const ENDPOINT = "/fee-collections/collection-statuses"
+    const response= await fetch(`${API_BASE_URL}${API_VERSION}${ENDPOINT}`)
+    console.log('collectionStatus', response)
+    const data= await response.json()
+    console.log('collectionStatus', response, data)
     return data
 }
 

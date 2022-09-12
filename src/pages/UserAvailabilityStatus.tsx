@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const UserAvailabilityStatus = (props: any) => {
 
-    const { userInfo, updateUserInfo, areaConstant, handleAreaConstant,  }: any = useContext(FeeCollectionContext)
+    const { userInfo, updateUserInfo, areaConstant, handleAreaConstant, handleConstantsArray }: any = useContext(FeeCollectionContext)
 
     console.log("userInfo", userInfo)
 
@@ -102,6 +102,7 @@ const UserAvailabilityStatus = (props: any) => {
         const areaResponse = await getAreaConstant()
         console.log("areaConstant", areaResponse)
         if(areaResponse?.success) {
+            handleConstantsArray("AREA", areaResponse?.data?.areas)
             setAreaList(areaResponse?.data?.areas)
         }
     }

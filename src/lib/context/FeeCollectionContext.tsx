@@ -13,6 +13,19 @@ const FeeCollectionProvider = ({children}) => {
     }
     
     const [ feeCollectionList, setFeeCollectionList ] = useState<any>([])
+
+    const [ collectionStatusConstant, setCollectionStatusConstant ] = useState<any>([])
+    const [ propertyStatusConstant, setPropertyStatusConstant ] = useState<any>([])
+    const [ areaListConstant, setAreaListConstant] = useState<any>([])
+
+    const handleConstantsArray = (type: any, data: any) => {
+        if(type === "PROPERTY") {
+            setPropertyStatusConstant(data)
+        }
+        else if(type === "COLLECTION") setCollectionStatusConstant(data)
+        else if(type === "AREA") setAreaListConstant(data)
+    }
+
     const [ userInfo, setUserInfo ] = useState<any>({
         propertyCode: "",
         area: "",
@@ -36,7 +49,20 @@ const FeeCollectionProvider = ({children}) => {
         setAreaConstant(data)
     }
 
-    const contextValue: any = { feeCollectionList, updateFeeCollectionList, userInfo, updateUserInfo, areaConstant, handleAreaConstant, isLoading, handleLoader }
+    const contextValue: any = { 
+        feeCollectionList, 
+        updateFeeCollectionList, 
+        userInfo, 
+        updateUserInfo, 
+        areaConstant, 
+        handleAreaConstant, 
+        isLoading, 
+        handleLoader,
+        propertyStatusConstant,
+        collectionStatusConstant,
+        areaListConstant,
+        handleConstantsArray
+    }
 
     return (
         <FeeCollectionContext.Provider value = {contextValue}>
