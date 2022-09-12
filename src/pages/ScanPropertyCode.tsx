@@ -59,7 +59,7 @@ const ScanPropertyCode = (props: any) => {
         video: { 
             facingMode: "environment" 
         }
-      }
+    }
 
     return (
         <Box width= {1} pt= {6}>

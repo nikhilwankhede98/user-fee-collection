@@ -32,6 +32,7 @@ const UserAvailable = (props: any) => {
             createdPlatform: "User-Services-Web",
             // survey: "5f03f560f302935a63901f63"
             survey: userInfo?.surveyKey,
+            area: userInfo?.area,
         })
         console.log("222", response)
         if(response?.data){

@@ -50,14 +50,16 @@ export const getAreaConstant = async (payload) => {
 }
 
 export const updatePaymentCollectionStatus = async (payload) => {
-    const ENDPOINT = "/fee-collections"
+    const {feeCollectionId, statusPayload} = payload
+    console.log("payload", payload)
+    const ENDPOINT = `/fee-collections/${feeCollectionId}`
     const apiBody = {
         method: 'PUT',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(statusPayload)
     }
     const response= await fetch(`${API_BASE_URL}${API_VERSION}${ENDPOINT}`, apiBody)
     console.log('response', response)

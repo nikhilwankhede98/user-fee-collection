@@ -4,13 +4,20 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 
 const BorderBox = (props: any) => {
-
+    const {hasCustomBackMethod = false, customBackMethod} = props
     let navigate = useNavigate();
+
+    const handleBackArrow = () => {
+        if(hasCustomBackMethod) {
+            customBackMethod()
+        }
+        navigate(-1)
+    }
 
     return (
         <Box>
             <Box display= "flex" justifyContent= "flex-start" mb= {2}>
-                <IconButton onClick={() => navigate(-1)}>
+                <IconButton onClick={() => handleBackArrow()}>
                     <ArrowBackIcon />   
                 </IconButton>
             </Box>

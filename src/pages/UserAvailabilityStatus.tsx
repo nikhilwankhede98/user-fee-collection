@@ -54,6 +54,7 @@ const UserAvailabilityStatus = (props: any) => {
                 createdPlatform: "User-Services-Web",
                 // need to send dynamically
                 survey: userInfo?.surveyKey,
+                area: selectedArea
                 // survey: "5f03f560f302935a63901f63"
             })
             console.log("222", response)
@@ -111,10 +112,14 @@ const UserAvailabilityStatus = (props: any) => {
 
     console.log('areaList', areaList)
 
+    const customBackMethod = () => {
+        updateUserInfo({surveyKey: "", propertyCode: ""})
+    }
+
     return (
         <Box pt= {6}>
             {/* <BorderBox text= {`User Property Code : ${userPropertyCode}`}> */}
-            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`}>
+            <BorderBox text= {`User Property Code : ${userInfo?.propertyCode}`} hasCustomBackMethod customBackMethod= {customBackMethod}>
                 {/* <Box width= {1} >
                 <Box width= {1} py= {2}  display= "flex" flexDirection= "column" justifyContent= "center" alignItems= "center" minHeight= "400px" border= "1px solid green"> */}
                     <Box sx={{ minWidth: 240 }} display= "flex" flexDirection= "column" justifyContent= "center">

@@ -3,6 +3,8 @@ import { Typography, Box, FormHelperText, Button } from "@mui/material";
 import BorderBox from "../components/BorderBox.tsx"
 import QRCode from 'qrcode'
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
+import { updatePaymentCollectionStatus } from "../lib/apis/index.ts"
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const UPIPaymentViaQr = (props: any) => {
@@ -14,9 +16,10 @@ const UPIPaymentViaQr = (props: any) => {
     const { userInfo, updateUserInfo, upiQRCodeUrl }: any = useContext(FeeCollectionContext)
 
     useEffect(() => {
-        console.log("hnh", userInfo?.upiQRCodeUrl, userInfo, userInfo?.amount, userInfo?.feeCollectionId)
+        console.log("xxx", userInfo?.upiQRCodeUrl, userInfo, userInfo?.amount, userInfo?.feeCollectionId)
         console.log('userInfo?.feeCollectionId', userInfo?.feeCollectionId)
-        if(!userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount) {
+        if(!userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount || !userInfo?.feeCollectionId) {
+            console.log('xxx', !userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount || userInfo?.feeCollectionId)
             navigate("/fee-collection")
         }
         // navigate("/fee-collection")
@@ -40,6 +43,22 @@ const UPIPaymentViaQr = (props: any) => {
         generateQRCode()
     }, [])
 
+    const handleConfirmPayment = async () => {
+        const response = await updatePaymentCollectionStatus({
+            feeCollectionId: userInfo?.feeCollectionId,
+            statusPayload : {
+                "status":"SUCCESS"
+            }
+        })
+        if(response?.data){
+            navigate("/fee-collection")
+        }
+        else {
+            toast.error("Unable to fetch data ~")
+        }
+        console.log("yyy", response)
+    }
+
     console.log("nnn", userInfo)
 
     return (
@@ -57,7 +76,7 @@ const UPIPaymentViaQr = (props: any) => {
                                     <img src= {imgUrl} alt= "qr-code" />
                                 </a>
                             </Box>
-                            <Button variant="contained" color="info" fullWidth  >
+                            <Button variant="contained" color="info" fullWidth onClick= {handleConfirmPayment} >
                                 Confirm Payment
                             </Button>
                         </Box>
