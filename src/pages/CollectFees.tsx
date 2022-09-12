@@ -33,7 +33,6 @@ const CollectFees = (props: any) => {
     const [selectedMonths, setSelectedMonths] = useState<any>([])
 
     useEffect(() => {
-        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
         if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
             navigate("/fee-collection")
         }
@@ -67,7 +66,6 @@ const CollectFees = (props: any) => {
                 type:paymentOption,
                 months: selectedMonths?.map(month => `${moment().month(month).format("MM")}-2022`)
             })
-            console.log("hnh", response, response?.data?.feeCollection?._id)
             if(response?.data){
                 if(response?.message) {
                     toast.success(response?.message)
@@ -92,7 +90,6 @@ const CollectFees = (props: any) => {
 
     useEffect(() => {
         if(userInfo?.feeCollectionId) {
-            console.log("xxx", userInfo?.feeCollectionId)
             updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
         }
     }, [userInfo?.feeCollectionId])
@@ -100,7 +97,6 @@ const CollectFees = (props: any) => {
     useEffect(() => {
         if(userInfo?.amount) {
             if(upiQRCodeUrl) {
-                console.log("xxx", userInfo?.amount, userInfo?.feeCollectionId, upiQRCodeUrl)
                 updateUserInfo({upiQRCodeUrl: upiQRCodeUrl})
             }
         }
@@ -108,59 +104,11 @@ const CollectFees = (props: any) => {
     
     useEffect(() => {
         if(userInfo?.amount && userInfo?.feeCollectionId && upiQRCodeUrl) {
-            console.log("xxx", userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl)
             navigate("/upi-payment")
         }
     }, [userInfo?.upiQRCodeUrl])
 
-    // useEffect(() => {
-    //     if(upiQRCodeUrl) {
-    //         console.log('upiQRCodeUrl', upiQRCodeUrl)
-    //         updateUserInfo({upiQRCodeUrl: upiQRCodeUrl})
-    //     }
-    // }, [upiQRCodeUrl])
-
-    // useEffect(() => {
-    //     if(feeCollectionId) {
-    //         console.log("hnh", feeCollectionId, userInfo?.feeCollectionId)
-    //         updateUserInfo({feeCollectionId: feeCollectionId})
-    //     }
-    // }, [feeCollectionId])
-
-    // useEffect(() => {
-    //     console.log("hnh", userInfo?.upiQRCodeUrl, parseFloat(enteredAmount).toFixed(2).toString())
-    //     if(enteredAmount) {
-    //         updateUserInfo({amount: parseFloat(enteredAmount).toFixed(2).toString()})
-    //     }
-    // }, [userInfo?.upiQRCodeUrl, userInfo?.feeCollectionId])
-
-    // useEffect(() => {
-    //     console.log("hnh", userInfo?.upiQRCodeUrl)
-    // }, [userInfo?.upiQRCodeUrl])
-
-    // useEffect(() => {
-    //     console.log("hnh", userInfo?.feeCollectionId, userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl, userInfo?.amount!== "", userInfo?.feeCollectionId!== "")
-    //     if(userInfo?.amount!== "" && userInfo?.feeCollectionId!== "" && userInfo?.upiQRCodeUrl!== "") {
-    //         alert("dfsdsf")
-    //         console.log("hnh", userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl)
-    //         navigate("/upi-payment")
-    //     }
-    // }, [userInfo?.amount, userInfo?.feeCollectionId, userInfo?.upiQRCodeUrl])
-
-    // const handlePaymentButtonClick = (paymentOption: any) => {
-    //     switch (paymentOption) {
-    //         case "cash" :
-    //             navigate("/fee-collection")
-    //             return
-
-    //         case "upi" :
-    //             navigate("/upi-payment")
-    //             return
-    //     }
-    // }
-
     const handleAmountChange = (e: any) => {
-        console.log("amount", e)
         const {value, name} = e?.target
         setEnteredAmount(value)
         if(!value) {
@@ -186,13 +134,11 @@ const CollectFees = (props: any) => {
         const {
           target: { value },
         } = event;
-        console.log('value', value)
         setSelectedMonths(value);
         setEnteredAmount(value?.length * 30)
       };
 
       const newArray = selectedMonths?.map(x => `${moment().month(x).format("MM")}-2022`)
-      console.log("newArray", newArray)
     
     return (
         <Box pt= {6}>

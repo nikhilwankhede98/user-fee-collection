@@ -26,7 +26,6 @@ const ScanPropertyCode = (props: any) => {
 
 
     const handleScan = async (data: any) => {
-        console.log("scanned", data)
         if(data) {
             setResult(data?.text)
             if(data?.text) {
@@ -51,7 +50,6 @@ const ScanPropertyCode = (props: any) => {
     
     useEffect(() => {
         if(userInfo?.surveyKey && userInfo?.propertyCode) {
-            console.log("check", userInfo?.surveyKey, userInfo?.propertyCode)
             navigate("/user-availablity-status")
         }
     }, [userInfo?.surveyKey, userInfo?.propertyCode])

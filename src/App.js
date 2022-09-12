@@ -29,11 +29,6 @@ import MainComponent from "./components/MainComponent.tsx"
 
 
 function App() {
-
-  // const location = useLocation()
-  // const isHomePage  = location?.pathname === "/"
-  // console.log("location", location, isHomePage)
-
   return (
       <div>
         <FeeCollectionProvider>

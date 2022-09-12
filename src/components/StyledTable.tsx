@@ -75,7 +75,6 @@ const StyledTable = (props: any) => {
     ]
 
     useEffect(() => {
-        console.log("111")
         setUpdatedArray(tableFeeCollections)
     }, [tableFeeCollections])
 
@@ -116,7 +115,6 @@ const StyledTable = (props: any) => {
 
     const getTableCellValue = (column, value, row) => {
 
-        console.log("yo", column, value, row)
         const getValue = (value) => {
             return _.isNumber(value) ? value : _.isEmpty(value) ? "-" : value;
         };

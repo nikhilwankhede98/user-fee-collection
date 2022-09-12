@@ -30,7 +30,6 @@ const AdminPage = (props: any) => {
     const [dataSet, setDataSet] = useState<any>([])
 
     const handleChangeFilter = (e: any, type: any) => {
-        console.log("asd", type, e?.target)
         if(type === "PROPERTY") {
             setSelectedPropertyType(e?.target?.value)
         }
@@ -53,7 +52,6 @@ const AdminPage = (props: any) => {
 
     const fetchPropertyStatus = async () => {
         const propertyStatusListResponse = await getPropertyStatusConstant()
-        console.log("check", propertyStatusListResponse)
         if(propertyStatusListResponse?.success) {
             handleConstantsArray("PROPERTY", propertyStatusListResponse?.data?.propertyStatuses)
         }
@@ -64,7 +62,6 @@ const AdminPage = (props: any) => {
 
     const fetchCollectionStatus = async () => {
         const collectionStatusListResponse = await getCollectionStatusConstant()
-        console.log("check", collectionStatusListResponse)
         if(collectionStatusListResponse?.success) {
             handleConstantsArray("COLLECTION", collectionStatusListResponse?.data?.collectionStatuses
             )
@@ -76,7 +73,6 @@ const AdminPage = (props: any) => {
 
     const fetchAreaConstants = async () => {
         const areaResponse = await getAreaConstant()
-        console.log("areaConstant", areaResponse)
         if(areaResponse?.success) {
             handleConstantsArray("AREA", areaResponse?.data?.areas)
         }
@@ -122,7 +118,6 @@ const AdminPage = (props: any) => {
                 payload = `?area=${selectedArea}`
             }
         }
-        console.log("payload", payload)
 
         let collectionList: any = []
         if(payload !== "") {
@@ -130,9 +125,7 @@ const AdminPage = (props: any) => {
         }
         else collectionList = await getFeeCollection()
         // collectionList = await payload !== "" ? getFeeCollection(payload) : getFeeCollection()
-        // console.log("collectionList", collectionList)
         if(collectionList?.success){
-            console.log("222", payload, collectionList?.data?.feeCollections)
             updateFeeCollectionList(collectionList?.data?.feeCollections)
         }
         else {
@@ -150,8 +143,6 @@ const AdminPage = (props: any) => {
     useEffect(() => {
         getCollection()
     }, [])
-
-    console.log("constant", areaListConstant)
 
     const handleClearClick = (type: any) => {
         switch (type) {

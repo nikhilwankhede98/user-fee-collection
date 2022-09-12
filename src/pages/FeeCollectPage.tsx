@@ -12,7 +12,6 @@ const FeeCollectPage = (props: any) => {
 
     const getCollection = async () => {
         const collectionList = await getFeeCollection()
-        console.log("collectionList", collectionList)
         if(collectionList?.success){
             // if(data?.success) {
             //     // Toast.error("Fee collection list fetched");

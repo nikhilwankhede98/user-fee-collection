@@ -17,7 +17,6 @@ const UserAvailable = (props: any) => {
     const { userInfo, updateUserInfo }: any = useContext(FeeCollectionContext)
 
     useEffect(() => {
-        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
         if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
             navigate("/fee-collection")
         }
@@ -34,7 +33,6 @@ const UserAvailable = (props: any) => {
             survey: userInfo?.surveyKey,
             area: userInfo?.area,
         })
-        console.log("222", response)
         if(response?.data){
             if(response?.message) {
                 toast.success(response?.message)
@@ -55,24 +53,13 @@ const UserAvailable = (props: any) => {
 
             case "refused-to-pay" : 
                 handlefeeCollectionInfo("REFUSED_TO_PAY", redirectionRoute)
-                // const yo = feeCollectionInfo({
-                //     ddn: userInfo?.propertyCode,
-                //     propertyStatus: "OPEN",
-                //     collectionStatus: "REFUSED_TO_PAY",
-                //     createdPlatform: "User-Services-Web",
-                //     survey: "5f03f560f302935a63901f63"
-                // })
-                // console.log("yo", yo)
-                // navigate(redirectionRoute)
                 break;
 
             case "refused-service" : 
                 handlefeeCollectionInfo("REFUSED_TO_AVAIL_SERVICE", redirectionRoute)
-                // navigate(redirectionRoute)
                 break;
 
             case "service-to-be-provided" : 
-                // navigate(redirectionRoute)
                 handlefeeCollectionInfo("SERVICE_TO_BE_PROVIDED", redirectionRoute)
                 break;
 
@@ -85,9 +72,6 @@ const UserAvailable = (props: any) => {
         <Box pt= {6}>
             {/* <BorderBox text= {`Property Code : ${userPropertyCode}`}> */}
             <BorderBox text= {`Property Code : ${userInfo?.propertyCode}`}>
-                {/* <Typography color= "#27878e" sx= {{fontWeight: 600, fontSize: "20px", fontFamily: "Montserrat", mb: 6}}>
-                    {`Property Code : ${userPropertyCode}`} 
-                </Typography> */}
                 <Box width= {1} display= "flex" alignItems= "center" flexDirection= "column" mb= {2}>
                     <Typography color= "#27878e" sx= {{fontWeight: 600, fontFamily: "Montserrat", mb: 1}}>
                         {`Owner Name : ${userInfo?.ownerName}`}

@@ -40,7 +40,6 @@ const FeeCollectionProvider = ({children}) => {
     })
     
     const updateUserInfo = (updatedObj: any) => {
-        console.log('updatedObj', updatedObj)
         setUserInfo({...userInfo, ...updatedObj})
     }
     

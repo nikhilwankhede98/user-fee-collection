@@ -16,10 +16,7 @@ const UPIPaymentViaQr = (props: any) => {
     const { userInfo, updateUserInfo, upiQRCodeUrl }: any = useContext(FeeCollectionContext)
 
     useEffect(() => {
-        console.log("xxx", userInfo?.upiQRCodeUrl, userInfo, userInfo?.amount, userInfo?.feeCollectionId)
-        console.log('userInfo?.feeCollectionId', userInfo?.feeCollectionId)
         if(!userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount || !userInfo?.feeCollectionId) {
-            console.log('xxx', !userInfo?.propertyCode || !userInfo?.surveyKey || !userInfo?.amount || userInfo?.feeCollectionId)
             navigate("/fee-collection")
         }
         // navigate("/fee-collection")
@@ -33,7 +30,6 @@ const UPIPaymentViaQr = (props: any) => {
             // const response = await QRCode.toDataURL(text)
             const response = await QRCode.toDataURL(userInfo?.upiQRCodeUrl)
             setImgUrl(response)
-            console.log("imgUrl", response)
         } catch (err) {
             console.error(err)
         }
@@ -60,10 +56,7 @@ const UPIPaymentViaQr = (props: any) => {
         else {
             toast.error("Unable to fetch data ~")
         }
-        console.log("yyy", response)
     }
-
-    console.log("nnn", userInfo)
 
     return (
         <Box pt= {6}>

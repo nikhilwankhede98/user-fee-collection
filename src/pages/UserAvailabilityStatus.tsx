@@ -13,7 +13,6 @@ const UserAvailabilityStatus = (props: any) => {
 
     const { userInfo, updateUserInfo, areaConstant, handleAreaConstant, handleConstantsArray }: any = useContext(FeeCollectionContext)
 
-    console.log("userInfo", userInfo)
 
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
@@ -25,7 +24,6 @@ const UserAvailabilityStatus = (props: any) => {
     const [areaHelperText, setAreaHelperText] = useState<any>("")
 
     useEffect(() => {
-        console.log("userInfo?.propertyCode", userInfo, userInfo?.propertyCode, userInfo?.surveyKey)
         if(!userInfo?.propertyCode || !userInfo?.surveyKey) {
             navigate("/fee-collection")
         }
@@ -45,7 +43,6 @@ const UserAvailabilityStatus = (props: any) => {
     }
 
     const handlefeeCloseCollection = async (redirectionRoute) => {
-        console.log("check", userInfo?.surveyKey, userInfo?.propertyCode)
         if(userInfo?.propertyCode && userInfo?.surveyKey) {
             const response = await feeCollectionInfo({
                 ddn: userInfo?.propertyCode,
@@ -57,7 +54,6 @@ const UserAvailabilityStatus = (props: any) => {
                 area: selectedArea
                 // survey: "5f03f560f302935a63901f63"
             })
-            console.log("222", response)
             if(response?.data){
                 if(response?.message) {
                     toast.success(response?.message)
@@ -103,7 +99,6 @@ const UserAvailabilityStatus = (props: any) => {
 
     const callAreaConstants = async () => {
         const areaResponse = await getAreaConstant()
-        console.log("areaConstant", areaResponse)
         if(areaResponse?.success) {
             handleConstantsArray("AREA", areaResponse?.data?.areas)
             setAreaList(areaResponse?.data?.areas)
@@ -113,8 +108,6 @@ const UserAvailabilityStatus = (props: any) => {
     useEffect(() => {
         callAreaConstants()
     }, [])
-
-    console.log('areaList', areaList)
 
     const customBackMethod = () => {
         updateUserInfo({surveyKey: "", propertyCode: ""})

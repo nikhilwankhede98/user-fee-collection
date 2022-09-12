@@ -22,7 +22,6 @@ const RevisitPage = (props: any) => {
     const {userPropertyCode = "RC-UKMS-PT-10054"} = props
 
     const handleRevisitCollection = async (redirectionRoute) => {
-        console.log("date", selectedDateTime, new Date(), "Sat Sep 15 2022 12:00:00 GMT+0530 (India Standard Time)")
         const response = await feeCollectionInfo({
             ddn: userInfo?.propertyCode,
             propertyStatus: "REVISIT",
@@ -34,7 +33,6 @@ const RevisitPage = (props: any) => {
             rescheduled: selectedDateTime
             // rescheduled: "Sat Sep 15 2022 12:00:00 GMT+0530 (India Standard Time)"
         })
-        console.log("555", response, selectedDateTime)
         if(response?.data){
             if(response?.message) {
                 toast.success(response?.message)
@@ -45,8 +43,6 @@ const RevisitPage = (props: any) => {
             toast.error("Unable to fetch data ~")
         }
     }
-
-    console.log('selectedDateTime', selectedDateTime)
 
     return (
         <Box pt= {6}>
