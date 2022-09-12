@@ -29,10 +29,10 @@ const ScanPropertyCode = (props: any) => {
         if(data) {
             setResult(data?.text)
             if(data?.text) {
-                const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
-                // const propertyDetailResponse = await getPropertyDetails(data?.textdata?.text)
+                // const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
+                const propertyDetailResponse = await getPropertyDetails(data?.text)
                 if(propertyDetailResponse?.success) {
-                    // sound?.play();
+                    sound?.play();
                     await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id, ownerName: propertyDetailResponse?.data?.propertyOwnerName, contactNumber: propertyDetailResponse?.data?.contactNumber})
                 }
                 else {
