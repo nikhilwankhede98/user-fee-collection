@@ -83,7 +83,9 @@ const ScanPropertyCode = (props: any) => {
                         style={{width: "240px!important"}}
                         onError={handleError}
                         onScan={handleScan}
-                        facingMode={"environment"}
+                        {...isMobile && {
+                            facingMode: "environment"
+                        }}
                     />
                 </Box>
             </BorderBox>
