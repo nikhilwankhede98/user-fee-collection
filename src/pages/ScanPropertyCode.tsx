@@ -31,18 +31,22 @@ const ScanPropertyCode = (props: any) => {
 
     const handleScan = async (data: any) => {
         if(data) {
-            setResult(data?.text)
-            if(data?.text) {
-                // const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
-                const propertyDetailResponse = await getPropertyDetails(data?.text)
-                if(propertyDetailResponse?.success) {
-                    sound?.play();
-                    await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id, ownerName: propertyDetailResponse?.data?.propertyOwnerName, contactNumber: propertyDetailResponse?.data?.contactNumber})
-                }
-                else {
-                    toast.error("Unable to fetch data ~")
-                }
+            setResult(data)
+            // const propertyDetailResponse = await getPropertyDetails("RC-UKMS-PT-1-000002")
+            const propertyDetailResponse = await getPropertyDetails(data)
+            if(propertyDetailResponse?.success) {
+                sound?.play();
+                await updateUserInfo({surveyKey: propertyDetailResponse?.data?._id, ownerName: propertyDetailResponse?.data?.propertyOwnerName, contactNumber: propertyDetailResponse?.data?.contactNumber})
             }
+            else {
+                toast.error("Unable to fetch data ~")
+            }
+        }
+    }
+
+    const handleNewScan = data => {
+        if (data) {
+            console.log("data", data)
         }
     }
 
@@ -72,11 +76,7 @@ const ScanPropertyCode = (props: any) => {
         }
     }
 
-    const handleNewScan = data => {
-        if (data) {
-          alert("yooo")
-        }
-      }
+    
     return (
         <Box width= {1} pt= {6}>
             <BorderBox >
@@ -86,10 +86,11 @@ const ScanPropertyCode = (props: any) => {
                     </Typography>
                     <QrReader
                         delay={500}
-                        style={previewStyle}
+                        // style={previewStyle}
+                        style={{width: "240px!important"}}
                         onError={handleError}
-                        // onScan={handleScan}
-                        onScan={handleNewScan}
+                        onScan={handleScan}
+                        // onScan={handleNewScan}
                         facingMode={"environment"}
                         // constraints={ {facingMode: 'environment!important'} }
                     />
