@@ -80,6 +80,7 @@ const ScanPropertyCode = (props: any) => {
                         style={previewStyle}
                         onError={handleError}
                         onScan={handleScan}
+                        constraints={ {facingMode: 'environment'} }
                     />
                 </Box>
             </BorderBox>
