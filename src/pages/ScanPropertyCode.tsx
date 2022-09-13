@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from "react"
 import { Typography, Box, useMediaQuery, useTheme } from "@mui/material";
-// import QrReader from 'react-qr-scanner'
-import QrReader from 'modern-react-qr-reader'
+import QrReader from 'react-qr-scanner'
+// import QrReader from 'modern-react-qr-reader'
 import BorderBox from "../components/BorderBox.tsx"
 import { useNavigate } from "react-router-dom";
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
@@ -46,6 +46,12 @@ const ScanPropertyCode = (props: any) => {
         }
     }
 
+    const handleNewScan = data => {
+        if (data) {
+            console.log("data", data)
+        }
+    }
+
     useEffect(() => {
         if(result && userInfo?.surveyKey) {
             updateUserInfo({propertyCode: result})
@@ -72,11 +78,7 @@ const ScanPropertyCode = (props: any) => {
         }
     }
 
-    const handleNewScan = data => {
-        if (data) {
-          alert("yooo")
-        }
-      }
+    
     return (
         <Box width= {1} pt= {6}>
             <BorderBox >
@@ -88,8 +90,8 @@ const ScanPropertyCode = (props: any) => {
                         delay={500}
                         style={previewStyle}
                         onError={handleError}
-                        // onScan={handleScan}
-                        onScan={handleNewScan}
+                        onScan={handleScan}
+                        // onScan={handleNewScan}
                         facingMode={"environment"}
                         // constraints={ {facingMode: 'environment!important'} }
                     />
