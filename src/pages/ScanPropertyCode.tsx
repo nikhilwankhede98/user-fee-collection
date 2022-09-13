@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from "react"
 import { Typography, Box, useMediaQuery, useTheme } from "@mui/material";
-import QrReader from 'react-qr-scanner'
-// import QrReader from 'modern-react-qr-reader'
+// import QrReader from 'react-qr-scanner'
+import QrReader from 'modern-react-qr-reader'
 import BorderBox from "../components/BorderBox.tsx"
 import { useNavigate } from "react-router-dom";
 import {FeeCollectionContext} from "../lib/context/FeeCollectionContext.tsx"
