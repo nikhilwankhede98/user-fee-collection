@@ -44,18 +44,6 @@ const ScanPropertyCode = (props: any) => {
         }
     }
 
-    const handleNewScan = data => {
-        if (data) {
-            console.log("data", data)
-        }
-    }
-
-    const handleNewScan = data => {
-        if (data) {
-            console.log("data", data)
-        }
-    }
-
     useEffect(() => {
         if(result && userInfo?.surveyKey) {
             updateUserInfo({propertyCode: result})
@@ -92,13 +80,10 @@ const ScanPropertyCode = (props: any) => {
                     </Typography>
                     <QrReader
                         delay={500}
-                        // style={previewStyle}
                         style={{width: "240px!important"}}
                         onError={handleError}
                         onScan={handleScan}
-                        // onScan={handleNewScan}
                         facingMode={"environment"}
-                        // constraints={ {facingMode: 'environment!important'} }
                     />
                 </Box>
             </BorderBox>
