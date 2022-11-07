@@ -135,7 +135,7 @@ const CollectFees = (props: any) => {
           target: { value },
         } = event;
         setSelectedMonths(value);
-        setEnteredAmount(value?.length * 30)
+        setEnteredAmount(value?.length * 50)
       };
 
       const newArray = selectedMonths?.map(x => `${moment().month(x).format("MM")}-2022`)
@@ -160,7 +160,7 @@ const CollectFees = (props: any) => {
                     
                     {selectedMonths?.length > 0 && (
                         <Typography sx= {{mb: 3, fontWeight: 600}} align= "center">
-                            {`Amount : ₹${parseFloat((selectedMonths?.length * 30).toFixed(2))}`}
+                            {`Amount : ₹${parseFloat((selectedMonths?.length * 50).toFixed(2))}`}
                         </Typography>
                     )}
                     
